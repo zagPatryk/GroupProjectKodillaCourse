@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.domain.cart;
 
 import com.kodilla.ecommercee.domain.product.Product;
 
+import com.kodilla.ecommercee.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,7 +53,6 @@ public class Cart {
         this.user = user;
         this.productsList = productsList;
     }
-
 
     @Override
     public boolean equals(Object o) {

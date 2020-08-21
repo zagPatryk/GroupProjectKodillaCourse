@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartDto {
-    private List<ProductDtoStub> cart; // change to List<ProductDto>
+    private List<String> cart; // change to List<ProductDto>
 }
