@@ -27,6 +27,11 @@ public class CartEntity {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
     private List<Product> productsList = new ArrayList<>();
 
+    public void addProduct(Product product) {
+        productsList.add(product);
+        product.getCarts().add(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
