@@ -25,11 +25,23 @@ repositories {
 
 
 dependencies {
+    // SPRING BOOT
+    // Database
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    // Web
     implementation('org.springframework.boot:spring-boot-starter-web')
+
+    // Unit tests
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+    // MySql driver
     runtimeOnly('mysql:mysql-connector-java')
+
+    // H2 Database
     runtimeOnly('com.h2database:h2')
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
