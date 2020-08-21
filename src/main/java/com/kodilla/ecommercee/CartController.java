@@ -7,33 +7,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/ecommerce/cart")
 public class CartController {
-    @RequestMapping(method = RequestMethod.GET, value = "createNewCart")
-    public CartDto createNewCart() {
-        return new CartDto(1L, new ArrayList<>());
+    @RequestMapping(method = RequestMethod.GET, value = "getNewCart")
+    public CartDto getNewCart() {
+        return new CartDto(new ArrayList<>());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProductsFromCart")
-    public List<String> getProductsFromCart(Long cartId) {
-        return new ArrayList<>();
+    public List<String> getProductsFromCart() {
+        return getNewCart().getCart();
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addProductToCart", consumes = APPLICATION_JSON_VALUE)
-    public CartDto addProductToCart(/*@RequestBody*/ Long productId) {
-        return new CartDto(1L, Arrays.asList("product1"));
+    public CartDto addProductToCart(@RequestBody String product) {
+        CartDto cartDto = new CartDto(getProductsFromCart());
+        cartDto.getCart().add(product);
+        return cartDto;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteProductFromCart", consumes = APPLICATION_JSON_VALUE)
-    public String deleteProductFromCart(/*@RequestParam*/ Long productId) {
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteProductFromCart")
+    public String deleteProductFromCart(@RequestParam String product) {
         return "item deleted";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createNewOrder", consumes = APPLICATION_JSON_VALUE)
-    public String createNewOrder(/*@RequestBody*/ Long cartId) {
+    @RequestMapping(method = RequestMethod.POST, value = "addNewOrder", consumes = APPLICATION_JSON_VALUE)
+    public String addNewOrder(@RequestBody CartDto cartDto) {
         return "New Order created";
     }
 }
