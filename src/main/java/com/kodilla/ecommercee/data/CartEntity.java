@@ -25,6 +25,10 @@ public class CartEntity {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
     private List<Product> productsList = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "USER_ID")
+    private UserEntity user;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
