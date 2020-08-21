@@ -14,18 +14,18 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/ecommerce/cart")
 public class CartController {
     @RequestMapping(method = RequestMethod.GET, value = "getNewCart")
-    public CartDto getNewCart() {
+    public CartDto getNewCart(@RequestParam String user) {
         return new CartDto(new ArrayList<>());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProductsFromCart")
-    public List<String> getProductsFromCart() {
-        return getNewCart().getCart();
+    public List<String> getProductsFromCart(@RequestParam String user) {
+        return getNewCart("user").getCart();
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addProductToCart", consumes = APPLICATION_JSON_VALUE)
     public CartDto addProductToCart(@RequestBody String product) {
-        CartDto cartDto = new CartDto(getProductsFromCart());
+        CartDto cartDto = new CartDto(getProductsFromCart("user"));
         cartDto.getCart().add(product);
         return cartDto;
     }
