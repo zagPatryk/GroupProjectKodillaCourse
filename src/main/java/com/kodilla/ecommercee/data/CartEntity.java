@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.data;
 
-import com.kodilla.ecommercee.data.temporary.Product;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "cart")
 public class CartEntity {
 
@@ -21,12 +22,7 @@ public class CartEntity {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(
-            targetEntity = ProductEntity.class,
-            mappedBy = "cart",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
     private List<Product> productsList = new ArrayList<>();
 
     @Override
