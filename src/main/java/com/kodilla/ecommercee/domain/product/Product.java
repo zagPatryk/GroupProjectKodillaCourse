@@ -34,7 +34,11 @@ public class Product {
     @JoinTable(
             name = "JOIN_PRODUCT_CART",
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "CART_ID", referencedColumnName = "id")}
+            inverseJoinColumns = {@JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")}
     )
     private List<CartEntity> carts;
+
+    @ManyToOne
+    @JoinColumn(name = "GROUP_ID")
+    private GroupStub groupId;
 }
