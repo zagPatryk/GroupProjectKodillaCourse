@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.data;
 
-import com.kodilla.ecommercee.data.temporary.Product;
+import com.kodilla.ecommercee.domain.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +22,7 @@ public class CartEntity {
     private Long id;
 
     @OneToMany(
-            targetEntity = ProductEntity.class,
+            targetEntity = Product.class,
             mappedBy = "cart",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER

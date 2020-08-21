@@ -7,6 +7,6 @@ import javax.persistence.Entity;
 import java.util.List;
 
 @Entity(name="Group")
-public class Group extends GenericEntity {
-    private List<Product> products;
+public class GroupStub extends GenericEntity {
+//    private List<Product> products;
 }
