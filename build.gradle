@@ -25,11 +25,34 @@ repositories {
 
 
 dependencies {
+    // SPRING BOOT
+    // Database
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    // Web
     implementation('org.springframework.boot:spring-boot-starter-web')
+<<<<<<< HEAD
+=======
+
+    // Unit tests
+>>>>>>> e722367... JDP200801-2: Implemented GroupController with ProductGroupDto class to symulate endpoints, added gradle coretion
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+    // MySql driver
     runtimeOnly('mysql:mysql-connector-java')
+<<<<<<< HEAD
     runtimeOnly('com.h2database:h2')
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+=======
+
+    // H2 Database
+    runtimeOnly('com.h2database:h2')
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+>>>>>>> e722367... JDP200801-2: Implemented GroupController with ProductGroupDto class to symulate endpoints, added gradle coretion
 }

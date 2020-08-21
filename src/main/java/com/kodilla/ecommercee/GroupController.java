@@ -38,9 +38,8 @@ public class GroupController {
     }
 
     public List<ProductGroupDto> getTempList() {
-        final List<ProductGroupDto> productGroupDtoList = IntStream.range(0, 5)
+        return IntStream.range(0, 5)
                 .mapToObj(productGroup -> new ProductGroupDto((long) productGroup, "Product group:" + productGroup))
                 .collect(Collectors.toList());
-        return productGroupDtoList;
     }
 }
