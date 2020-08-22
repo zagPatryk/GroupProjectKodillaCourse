@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.domain.product;
 
 import com.kodilla.ecommercee.domain.cart.Cart;
-import com.kodilla.ecommercee.domain.group.GroupStub;
+import com.kodilla.ecommercee.domain.group.Group;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +43,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "GROUP_ID")
-    private GroupStub groupId;
+    private Group groupId;
 
     public Product(String name, String description, double price) {
         this.name = name;
@@ -51,7 +51,7 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, String description, double price, GroupStub groupId) {
+    public Product(String name, String description, double price, Group groupId) {
         this(name, description, price);
         this.groupId = groupId;
     }
