@@ -23,8 +23,8 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteGroup")
-    public void deleteGroup(@RequestParam Long groupId) {
-
+    public boolean deleteGroup(@RequestParam Long groupId) {
+        return true;
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateGroup", consumes = APPLICATION_JSON_VALUE)
