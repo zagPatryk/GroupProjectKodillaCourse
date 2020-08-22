@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.domain.order;
 
+import com.kodilla.ecommercee.data.CartEntity;
 import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -14,8 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "ORDERS")
+@Entity(name = "order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +26,7 @@ public class Order {
     @NotNull
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")
-    private Cart cart;
+    private CartEntity cart;
 
     @NotNull
     @ManyToOne
