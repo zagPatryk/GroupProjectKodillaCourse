@@ -1,4 +1,4 @@
-package com.kodilla.ecommercee.domain.cart;
+package com.kodilla.ecommercee.domain;
 
 import com.kodilla.ecommercee.domain.product.ProductDtoStub;
 import lombok.AllArgsConstructor;
@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartDto {
-    private List<String> cart; // change to List<ProductDto>
+    private List<String> cart; //List<ProductDto>
 }

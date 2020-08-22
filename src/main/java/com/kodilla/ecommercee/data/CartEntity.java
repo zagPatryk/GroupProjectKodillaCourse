@@ -1,4 +1,4 @@
-package com.kodilla.ecommercee.domain.cart;
+package com.kodilla.ecommercee.data;
 
 import com.kodilla.ecommercee.domain.product.Product;
 
@@ -19,7 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "CART")
-public class Cart {
+public class CartEntity {
 
     @Id
     @NotNull
@@ -40,16 +40,16 @@ public class Cart {
         product.getCarts().add(this);
     }
 
-    public Cart(User user) {
+    public CartEntity(User user) {
         this.user = user;
     }
 
-    public Cart(User user, Product... products) {
+    public CartEntity(User user, Product... products) {
         this.user = user;
         productsList.addAll(Arrays.asList(products));
     }
 
-    public Cart(User user, List<Product> productsList) {
+    public CartEntity(User user, List<Product> productsList) {
         this.user = user;
         this.productsList = productsList;
     }
@@ -58,7 +58,7 @@ public class Cart {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Cart that = (Cart) o;
+        CartEntity that = (CartEntity) o;
         return id.equals(that.id);
     }
 
