@@ -1,10 +1,9 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.CartDto;
+import com.kodilla.ecommercee.domain.cart.CartDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
