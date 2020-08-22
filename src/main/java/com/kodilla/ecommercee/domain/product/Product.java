@@ -60,4 +60,9 @@ public class Product {
         this.carts.add(cart);
         cart.getProductsList().add(this);
     }
+
+    public void addGroup(Group group) {
+        group.getProducts().add(this);
+        this.groupId = group;
+    }
 }
