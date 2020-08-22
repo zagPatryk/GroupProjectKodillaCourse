@@ -14,12 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Entity(name="Group")
-public class GroupStub {
+public class Group {
     @Id
     @GeneratedValue
     @NotNull
     @Column(name = "GROUP_ID")
     private Long id;
+
+    @Column(name="NAME")
+    private String name;
 
     @OneToMany(
             targetEntity = Product.class,
