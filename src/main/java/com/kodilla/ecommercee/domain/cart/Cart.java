@@ -1,26 +1,47 @@
 package com.kodilla.ecommercee.domain.cart;
 
-import com.kodilla.ecommercee.domain.order.Order;
+import com.kodilla.ecommercee.domain.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "carts")
+@AllArgsConstructor
+@Entity(name = "cart")
 public class Cart {
 
     @Id
     @NotNull
     @GeneratedValue
     @Column(name = "CART_ID")
-    private Long cartId;
+    private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
-    private Order order;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
+    private List<Product> productsList = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        productsList.add(product);
+        product.getCarts().add(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart that = (Cart) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.domain.order;
 
-import com.kodilla.ecommercee.data.CartEntity;
 import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,7 @@ public class Order {
     @NotNull
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")
-    private CartEntity cart;
+    private Cart cart;
 
     @NotNull
     @ManyToOne
