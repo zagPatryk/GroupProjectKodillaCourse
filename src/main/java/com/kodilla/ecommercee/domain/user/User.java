@@ -16,7 +16,6 @@ import java.util.List;
 @Entity(name = "user")
 public class User {
     @Id
-    @NotNull
     @GeneratedValue
     @Column(name = "user_id")
     private Long userId;

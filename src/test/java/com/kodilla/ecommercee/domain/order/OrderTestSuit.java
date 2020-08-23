@@ -22,14 +22,13 @@ public class OrderTestSuit {
     private OrderDao orderDao;
 
     @Test
-    public void testOrderSave() {
+    public void testSaveOrder() {
         //Given
         Order order = new Order(1L, new Cart(), new User());
         //When
         orderDao.save(order);
         //Then
         long id = order.getOrderId();
-        System.out.println(id);
         Optional<Order> checkOrder = orderDao.findById(id);
         assertTrue(checkOrder.isPresent());
         //Clean Up

@@ -18,9 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity(name = "cart")
 public class Cart {
-
     @Id
-    @NotNull
     @GeneratedValue
     @Column(name = "CART_ID")
     private Long id;
