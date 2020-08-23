@@ -42,7 +42,7 @@ public class Product {
     private List<Cart> carts = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "GROUP_ID")
+    @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")
     private Group groupId;
 
     public Product(String name, String description, double price) {

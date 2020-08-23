@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.domain.cart;
 
+import com.kodilla.ecommercee.domain.order.Order;
 import com.kodilla.ecommercee.domain.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,10 @@ public class Cart {
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
     private List<Product> productsList = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id")
+    private Order order;
 
     public void addProduct(Product product) {
         productsList.add(product);
