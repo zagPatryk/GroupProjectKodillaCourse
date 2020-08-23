@@ -26,13 +26,22 @@ public class GroupTestSuit {
     @Test
     public void testSaveGroup() {
         // Given
+        CartEntity cartEntity = new CartEntity(1L, new ArrayList<Product>());
+        Product product = new Product(1L, "Product name", "Desc", 10, new ArrayList<CartEntity>(), new Group());
         Group group = new Group(1L, "Name Group", new ArrayList<Product>());
+
+        group.getProducts().add(product);
+        product.getCarts().add(cartEntity);
+        cartEntity.getProductsList().add(product);
+
         // When
         groupDao.save(group);
-        // Then
         long id = group.getId();
+
+        // Then
         Optional<Group> groupIdDao = groupDao.findById(id);
         assertTrue(groupIdDao.isPresent());
+
         // Clear up
         groupDao.deleteById(id);
     }
