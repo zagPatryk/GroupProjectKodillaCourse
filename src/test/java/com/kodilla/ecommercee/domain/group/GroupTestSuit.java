@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.domain.group;
 
+import com.kodilla.ecommercee.data.CartEntity;
 import com.kodilla.ecommercee.domain.group.dao.GroupDao;
 import com.kodilla.ecommercee.domain.product.Product;
 import org.junit.Test;
