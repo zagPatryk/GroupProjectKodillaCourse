@@ -14,11 +14,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="GROUPS")
+@Table(name="PRODUCT_GROUPS")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class GroupEntity {
 
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     @Column(name = "GROUP_ID")
     private Long id;
 
@@ -33,7 +35,7 @@ public class GroupEntity {
     )
     private List<Product> products = new ArrayList<>();
 
-    public Group(String name) {
+    public GroupEntity(String name) {
         this.name = name;
     }
 }
