@@ -13,33 +13,34 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getOrders")
-    public List<OrderDto> getGroups() {
-        return getOrderDtoList();
+    public List<OrdersDto> getOrders() {
+        return getTempOrderDtoList();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getOrder")
-    public OrderDto getGroup(@RequestParam long orderId) {
-        return getOrderDtoList().get((int) orderId);
+    public OrdersDto getGroup(@RequestParam long orderId) {
+        return getTempOrderDtoList().get((int) orderId);
     }
 
+
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteOrder")
-    public boolean deleteGroup(@RequestParam Long orderId) {
-        return true;
+    public void deleteGroup(@RequestParam long orderId) {
+        System.out.println("Order number: " + orderId + " has been deleted");
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateOrder", consumes = APPLICATION_JSON_VALUE)
-    public OrderDto updateGroup(@RequestBody OrderDto orderDto) {
-        return orderDto;
+    public OrdersDto updateGroup(@RequestBody OrdersDto ordersDto) {
+        return ordersDto;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createOrder", consumes = APPLICATION_JSON_VALUE)
-    public OrderDto createGroup(@RequestBody OrderDto orderDto) {
-        return orderDto;
+    public OrdersDto createGroup(@RequestBody OrdersDto ordersDto) {
+        return ordersDto;
     }
 
-    public List<OrderDto> getOrderDtoList() {
+    public List<OrdersDto> getTempOrderDtoList() {
         return IntStream.range(0, 20)
-                .mapToObj(order -> new OrderDto((long) order, "Order name: " + order))
+                .mapToObj(order -> new OrdersDto((long) order, "Order name: " + order))
                 .collect(Collectors.toList());
     }
 }
