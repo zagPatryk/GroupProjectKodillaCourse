@@ -27,15 +27,26 @@ public class GroupEntity {
     @Column(name="NAME")
     private String name;
 
-    @OneToMany(
-            targetEntity = Product.class,
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH},
             mappedBy = "groupId",
-            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
     private List<Product> products = new ArrayList<>();
 
     public GroupEntity(String name) {
         this.name = name;
+    }
+
+    public GroupEntity addProduct(Product product) {
+        this.products.add(product);
+        product.addGroup(this);
+        return this;
+    }
+
+    public GroupEntity removeProduct(Product product) {
+        this.products.remove(product);
+        product.removeGroup(this);
+        return this;
     }
 }

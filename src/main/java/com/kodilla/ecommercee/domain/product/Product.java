@@ -2,10 +2,7 @@ package com.kodilla.ecommercee.domain.product;
 
 import com.kodilla.ecommercee.data.CartEntity;
 import com.kodilla.ecommercee.domain.group.GroupEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,11 +13,13 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity(name="Product")
 public class Product {
     @Id
     @GeneratedValue
     @NotNull
+    @EqualsAndHashCode.Include
     @Column(name="PRODUCT_ID")
     private Long id;
 
@@ -33,7 +32,7 @@ public class Product {
     @Column(name="PRICE")
     private double price;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(
             name = "JOIN_PRODUCT_CART",
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")},
@@ -41,9 +40,13 @@ public class Product {
     )
     private List<CartEntity> carts = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "GROUP_ID")
-    private GroupEntity groupId;
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @JoinTable(
+            name = "JOIN_PRODUCT_GROUP",
+            joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")}
+    )
+    private List<GroupEntity> groupId = new ArrayList<>();
 
     public Product(String name, String description, double price) {
         this.name = name;
@@ -51,9 +54,14 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, String description, double price, GroupEntity groupId) {
+    public Product(String name, String description, double price, List<GroupEntity> groups) {
         this(name, description, price);
-        this.groupId = groupId;
+        this.groupId.addAll(groups);
+    }
+
+    public Product(String name, String description, double price, GroupEntity group) {
+        this(name, description, price);
+        this.groupId.add(group);
     }
 
     public void addToCart(CartEntity cart) {
@@ -61,8 +69,20 @@ public class Product {
         cart.getProductsList().add(this);
     }
 
-    public void addGroup(Group group) {
+    public void removeFromCart(CartEntity cart) {
+        this.carts.remove(cart);
+        cart.getProductsList().remove(this);
+    }
+
+    public Product addGroup(GroupEntity group) {
         group.getProducts().add(this);
-        this.groupId = group;
+        this.groupId.add(group);
+        return this;
+    }
+
+    public Product removeGroup(GroupEntity group) {
+        group.getProducts().remove(this);
+        this.groupId.remove(group);
+        return this;
     }
 }
