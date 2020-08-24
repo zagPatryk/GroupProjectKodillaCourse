@@ -1,11 +1,11 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.domain.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class OrdersDto {
+public class OrderDto {
     public Long idOrder;
     public String nameOfOrder;
 }
