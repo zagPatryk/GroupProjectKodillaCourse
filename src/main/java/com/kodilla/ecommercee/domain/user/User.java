@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -15,9 +16,8 @@ import java.util.List;
 @Entity(name = "user")
 public class User {
     @Id
-    @NotNull
     @GeneratedValue
-    @Column(name = "USER_ID")
+    @Column(name = "user_id")
     private Long userId;
 
     @OneToMany(
@@ -26,5 +26,6 @@ public class User {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    public List<Order> order;
+    public List<Order> order = new ArrayList<>();
+
 }

@@ -5,30 +5,29 @@ import com.kodilla.ecommercee.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "order")
+@Entity
+@Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @NotNull
-    @Column(name="ORDER_ID", unique = true)
+    @Column(name="order_id")
     private Long orderId;
 
-    @NotNull
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")
+    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
     private Cart cart;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
+
+
 }
