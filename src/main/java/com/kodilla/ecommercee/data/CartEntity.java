@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.data;
 
+import com.kodilla.ecommercee.domain.group.GroupEntity;
 import com.kodilla.ecommercee.domain.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,12 +25,23 @@ public class CartEntity {
     @Column(name = "CART_ID")
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH},
+            mappedBy = "carts",
+            fetch = FetchType.EAGER
+    )
     private List<Product> productsList = new ArrayList<>();
 
-    public void addProduct(Product product) {
+    public CartEntity addProduct(Product product) {
         productsList.add(product);
         product.getCarts().add(this);
+        return this;
+    }
+
+    public CartEntity removeProduct(Product product) {
+        productsList.remove(product);
+        product.getCarts().remove(this);
+        return this;
     }
 
     @Override
