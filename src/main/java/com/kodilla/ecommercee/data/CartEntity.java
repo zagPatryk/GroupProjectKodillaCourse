@@ -2,6 +2,8 @@ package com.kodilla.ecommercee.data;
 
 import com.kodilla.ecommercee.domain.group.GroupEntity;
 import com.kodilla.ecommercee.domain.product.Product;
+
+import com.kodilla.ecommercee.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,13 +12,14 @@ import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "cart")
+@Entity(name = "CART")
 public class CartEntity {
 
     @Id
@@ -31,6 +34,11 @@ public class CartEntity {
             fetch = FetchType.EAGER
     )
     private List<Product> productsList = new ArrayList<>();
+  
+    @OneToOne
+    @NotNull
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     public CartEntity addProduct(Product product) {
         productsList.add(product);
@@ -42,6 +50,20 @@ public class CartEntity {
         productsList.remove(product);
         product.getCarts().remove(this);
         return this;
+    }
+
+    public CartEntity(User user) {
+        this.user = user;
+    }
+
+    public CartEntity(User user, Product... products) {
+        this.user = user;
+        productsList.addAll(Arrays.asList(products));
+    }
+
+    public CartEntity(User user, List<Product> productsList) {
+        this.user = user;
+        this.productsList = productsList;
     }
 
     @Override
