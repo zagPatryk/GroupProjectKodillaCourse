@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @Entity
 @Table(name="PRODUCT_GROUPS")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -20,6 +19,7 @@ public class GroupEntity {
 
     @Id
     @GeneratedValue
+    @NotNull
     @EqualsAndHashCode.Include
     @Column(name = "GROUP_ID")
     private Long id;
