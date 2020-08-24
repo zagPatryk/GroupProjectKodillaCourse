@@ -27,5 +27,4 @@ public class User {
             fetch = FetchType.EAGER
     )
     public List<Order> order;
-
 }
