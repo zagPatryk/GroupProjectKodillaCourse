@@ -2,9 +2,7 @@ package com.kodilla.ecommercee.domain.group;
 
 import com.kodilla.ecommercee.GenericEntity;
 import com.kodilla.ecommercee.domain.product.Product;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,11 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Entity(name="Group")
-public class Group {
+@Setter
+@Entity
+@Table(name="PRODUCT_GROUPS")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class GroupEntity {
+
     @Id
     @GeneratedValue
-    @NotNull
+    @EqualsAndHashCode.Include
     @Column(name = "GROUP_ID")
     private Long id;
 
@@ -33,7 +35,7 @@ public class Group {
     )
     private List<Product> products = new ArrayList<>();
 
-    public Group(String name) {
+    public GroupEntity(String name) {
         this.name = name;
     }
 }
