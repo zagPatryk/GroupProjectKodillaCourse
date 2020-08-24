@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee;
 
+import com.kodilla.ecommercee.domain.order.OrderDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +14,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getOrders")
-    public List<OrdersDto> getOrders() {
+    public List<OrderDto> getOrders() {
         return getTempOrderDtoList();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getOrder")
-    public OrdersDto getGroup(@RequestParam long orderId) {
+    public OrderDto getGroup(@RequestParam long orderId) {
         return getTempOrderDtoList().get((int) orderId);
     }
 
@@ -29,18 +30,18 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateOrder", consumes = APPLICATION_JSON_VALUE)
-    public OrdersDto updateGroup(@RequestBody OrdersDto ordersDto) {
-        return ordersDto;
+    public OrderDto updateGroup(@RequestBody OrderDto orderDto) {
+        return orderDto;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createOrder", consumes = APPLICATION_JSON_VALUE)
-    public OrdersDto createGroup(@RequestBody OrdersDto ordersDto) {
-        return ordersDto;
+    public OrderDto createGroup(@RequestBody OrderDto orderDto) {
+        return orderDto;
     }
 
-    public List<OrdersDto> getTempOrderDtoList() {
+    public List<OrderDto> getTempOrderDtoList() {
         return IntStream.range(0, 20)
-                .mapToObj(order -> new OrdersDto((long) order, "Order name: " + order))
+                .mapToObj(order -> new OrderDto((long) order, "Order name: " + order))
                 .collect(Collectors.toList());
     }
 }
