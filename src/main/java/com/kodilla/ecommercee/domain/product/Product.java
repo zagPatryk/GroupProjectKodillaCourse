@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.domain.product;
 
-import com.kodilla.ecommercee.data.CartEntity;
+import com.kodilla.ecommercee.domain.cart.CartEntity;
 import com.kodilla.ecommercee.domain.group.GroupEntity;
 import lombok.*;
 

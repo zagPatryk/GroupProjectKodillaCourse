@@ -1,6 +1,5 @@
-package com.kodilla.ecommercee.data;
+package com.kodilla.ecommercee.domain.cart;
 
-import com.kodilla.ecommercee.domain.group.GroupEntity;
 import com.kodilla.ecommercee.domain.product.Product;
 
 import com.kodilla.ecommercee.domain.user.User;
@@ -35,7 +34,7 @@ public class CartEntity {
     )
     private List<Product> productsList = new ArrayList<>();
   
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @NotNull
     @JoinColumn(name = "USER_ID")
     private User user;
