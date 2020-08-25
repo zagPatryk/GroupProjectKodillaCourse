@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.domain.product.Product;
 
 import com.kodilla.ecommercee.domain.user.User;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,9 +20,12 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity(name = "cart")
 public class Cart {
+
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue
     @Column(name = "CART_ID")
     private Long id;
@@ -56,18 +60,5 @@ public class Cart {
     public Cart(User user, List<Product> productsList) {
         this.user = user;
         this.productsList = productsList;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cart that = (Cart) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

@@ -2,10 +2,7 @@ package com.kodilla.ecommercee.domain.product;
 
 import com.kodilla.ecommercee.domain.group.Group;
 import com.kodilla.ecommercee.domain.cart.Cart;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,10 +13,12 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity(name="Product")
 public class Product {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     @NotNull
     @Column(name="PRODUCT_ID")
     private Long id;
