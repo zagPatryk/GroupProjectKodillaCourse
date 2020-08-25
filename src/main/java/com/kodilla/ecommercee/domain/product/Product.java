@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.domain.product;
 
-import com.kodilla.ecommercee.data.CartEntity;
-import com.kodilla.ecommercee.domain.group.GroupEntity;
+import com.kodilla.ecommercee.domain.group.Group;
+import com.kodilla.ecommercee.domain.cart.Cart;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,11 +39,11 @@ public class Product {
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")}
     )
-    private List<CartEntity> carts = new ArrayList<>();
+    private List<Cart> carts = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "GROUP_ID")
-    private GroupEntity groupId;
+    @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")
+    private Group groupId;
 
     public Product(String name, String description, double price) {
         this.name = name;
@@ -51,12 +51,12 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, String description, double price, GroupEntity groupId) {
+    public Product(String name, String description, double price, Group groupId) {
         this(name, description, price);
         this.groupId = groupId;
     }
 
-    public void addToCart(CartEntity cart) {
+    public void addToCart(Cart cart) {
         this.carts.add(cart);
         cart.getProductsList().add(this);
     }

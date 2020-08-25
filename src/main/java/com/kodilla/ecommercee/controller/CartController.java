@@ -1,17 +1,16 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.CartDto;
+import com.kodilla.ecommercee.domain.cart.CartDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/ecommerce/cart")
+@RequestMapping("/v1/cart")
 public class CartController {
     @RequestMapping(method = RequestMethod.GET, value = "getNewCart")
     public CartDto getNewCart(@RequestParam String user) {
