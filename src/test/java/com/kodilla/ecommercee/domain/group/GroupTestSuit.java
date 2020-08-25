@@ -11,9 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
@@ -32,22 +29,19 @@ public class GroupTestSuit {
         Product product2 = new Product();
         Product product3 = new Product();
         Product product4 = new Product();
-        Product product5 = new Product();
-        Product product6 = new Product();
+
         Group group1 = new Group();
         Group group2 = new Group();
 
-        List<Product> productList1 = Arrays.asList(product1, product2, product3);
-        group1.setProducts(productList1);
+        group1.getProducts().add(product1);
+        group1.getProducts().add(product2);
         product1.setGroupId(group1);
         product2.setGroupId(group1);
-        product3.setGroupId(group1);
 
-        List<Product> productList2 = Arrays.asList(product4, product5, product6);
-        group2.setProducts(productList2);
+        group2.getProducts().add(product3);
+        group2.getProducts().add(product4);
+        product3.setGroupId(group2);
         product4.setGroupId(group2);
-        product5.setGroupId(group2);
-        product6.setGroupId(group2);
 
         // When
         groupDao.save(group1);
@@ -69,62 +63,27 @@ public class GroupTestSuit {
     }
 
     @Test
-    public void testCreateReadGroup() {
+    public void testReadGroup() {
         // Given
         Product product1 = new Product();
         Product product2 = new Product();
         Group group = new Group();
-        List<Product> productList1 = Arrays.asList(product1, product2);
 
-        group.setProducts(productList1);
+        group.getProducts().add(product1);
+        group.getProducts().add(product2);
         product1.setGroupId(group);
         product2.setGroupId(group);
 
         // When
         groupDao.save(group);
-        long id1 = group.getId();
-
-        // Then
-        Assert.assertEquals(group, groupDao.findById(id1).orElse(new Group()));
-
-        // Clean-up
-        groupDao.deleteById(id1);
-    }
-
-    @Test
-    public void testUpdateGroup() {
-        // Given
-//        1L, "test", Collections.singletonList(new Product())
-        Group group = new Group();
-
-        // When
-        groupDao.save(group);
         long id = group.getId();
-        final Optional<Group> byId = groupDao.findById(id);
-        System.out.println(byId);
-//        Assert.assertTrue(groupDao.findById(id).isPresent());
-        groupDao.deleteById(id);
-/*        // When
-        long groupId = 2L;
-        String groupName = "testUpdate";
-        List<Product> productList = Collections.singletonList(new Product());
-
-        group.setId(groupId);
-        group.setName(groupName);
-        group.setProducts(productList);
-
-        groupDao.save(group);
-        long id2 = group.getId();
 
         // Then
-        final Group retrievedGroup2 = groupDao.findById(id2).orElse(new Group());
-        Assert.assertEquals(groupId, retrievedGroup2.getId(), 0);
-        Assert.assertEquals(groupName, retrievedGroup2.getName());
-        Assert.assertEquals(productList, retrievedGroup2.getProducts());
+        Group actual = groupDao.findById(id).orElse(new Group());
+        Assert.assertEquals(group, actual);
 
         // Clean-up
         groupDao.deleteById(id);
-        groupDao.deleteById(id2);*/
     }
 
     @Test
@@ -133,9 +92,9 @@ public class GroupTestSuit {
         Product product1 = new Product();
         Product product2 = new Product();
         Group group = new Group();
-        List<Product> productList = Arrays.asList(product1, product2);
 
-        group.setProducts(productList);
+        group.getProducts().add(product1);
+        group.getProducts().add(product2);
         product1.setGroupId(group);
         product2.setGroupId(group);
 
@@ -147,5 +106,37 @@ public class GroupTestSuit {
 
         // Then
         Assert.assertFalse(groupDao.findById(id).isPresent());
+    }
+
+    @Test
+    public void testUpdateGroup() {
+        // Given
+        Group group = new Group(1L, "test");
+
+        // When
+        groupDao.save(group);
+        Long id = group.getId();
+        Group groupDaoId1 = groupDao.findById(id).orElse(group);
+
+        // Then
+        Assert.assertEquals(group.getId(), groupDaoId1.getId(), 0);
+        Assert.assertEquals(group.getName(), groupDaoId1.getName());
+
+        // Update
+        group.setId(2L);
+        group.setName("test2");
+
+        // When
+        groupDao.save(group);
+        Long id2 = group.getId();
+        Group groupDaoId2 = groupDao.findById(id2).orElse(group);
+
+        // Then
+        Assert.assertEquals(group.getId(), groupDaoId2.getId(), 0);
+        Assert.assertEquals(group.getName(), groupDaoId2.getName());
+
+        // Clean-up
+        groupDao.deleteById(id);
+        groupDao.deleteById(id2);
     }
 }
