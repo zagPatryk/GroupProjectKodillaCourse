@@ -18,6 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity(name = "cart")
 public class Cart {
+    
     @Id
     @GeneratedValue
     @Column(name = "CART_ID")
