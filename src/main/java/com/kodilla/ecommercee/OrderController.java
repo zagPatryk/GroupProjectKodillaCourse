@@ -41,7 +41,7 @@ public class OrderController {
 
     public List<OrderDto> getTempOrderDtoList() {
         return IntStream.range(0, 20)
-                .mapToObj(order -> new OrderDto((long) order, "Order name: " + order))
+                .mapToObj(order -> new OrderDto())
                 .collect(Collectors.toList());
     }
 }
