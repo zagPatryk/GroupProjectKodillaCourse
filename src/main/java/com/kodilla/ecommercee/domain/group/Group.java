@@ -20,8 +20,8 @@ import java.util.List;
 public class Group {
     @Id
     @GeneratedValue
-    @NotNull
     @EqualsAndHashCode.Include
+    @NotNull
     @Column(name = "GROUP_ID")
     private Long id;
 
