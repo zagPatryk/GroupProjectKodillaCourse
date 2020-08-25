@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.domain.group;
 
-import com.kodilla.ecommercee.GenericEntity;
 import com.kodilla.ecommercee.domain.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
