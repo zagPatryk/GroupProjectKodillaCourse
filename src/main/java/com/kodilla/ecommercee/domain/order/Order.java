@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.domain.order;
 import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.user.User;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,10 +14,12 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     @NotNull
     @Column(name="order_id")
     private Long orderId;
