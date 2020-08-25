@@ -10,7 +10,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/ecommerce/cart")
+@RequestMapping("/v1/cart")
 public class CartController {
     @RequestMapping(method = RequestMethod.GET, value = "getNewCart")
     public CartDto getNewCart(@RequestParam String user) {
