@@ -1,24 +1,25 @@
 package com.kodilla.ecommercee.domain.group;
 
-import com.kodilla.ecommercee.GenericEntity;
 import com.kodilla.ecommercee.domain.product.Product;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
-@Entity(name="Group")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity(name="product_group")
 public class Group {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     @NotNull
     @Column(name = "GROUP_ID")
     private Long id;
@@ -32,5 +33,5 @@ public class Group {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    private List<Product> products;
+    private final List<Product> products = new ArrayList<>();
 }

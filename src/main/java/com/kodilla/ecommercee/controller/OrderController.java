@@ -1,4 +1,4 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.domain.order.OrderDto;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,7 @@ public class OrderController {
 
     public List<OrderDto> getTempOrderDtoList() {
         return IntStream.range(0, 20)
-                .mapToObj(order -> new OrderDto((long) order, "Order name: " + order))
+                .mapToObj(order -> new OrderDto())
                 .collect(Collectors.toList());
     }
 }

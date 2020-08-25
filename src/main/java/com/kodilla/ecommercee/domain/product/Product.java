@@ -1,11 +1,8 @@
 package com.kodilla.ecommercee.domain.product;
 
-import com.kodilla.ecommercee.data.CartEntity;
 import com.kodilla.ecommercee.domain.group.Group;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.kodilla.ecommercee.domain.cart.Cart;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,10 +13,12 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity(name="Product")
 public class Product {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     @NotNull
     @Column(name="PRODUCT_ID")
     private Long id;
@@ -39,10 +38,10 @@ public class Product {
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")}
     )
-    private List<CartEntity> carts = new ArrayList<>();
+    private List<Cart> carts = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "GROUP_ID")
+    @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")
     private Group groupId;
 
     public Product(String name, String description, double price) {
@@ -56,7 +55,7 @@ public class Product {
         this.groupId = groupId;
     }
 
-    public void addToCart(CartEntity cart) {
+    public void addToCart(Cart cart) {
         this.carts.add(cart);
         cart.getProductsList().add(this);
     }

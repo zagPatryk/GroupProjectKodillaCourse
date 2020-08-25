@@ -1,18 +1,34 @@
 package com.kodilla.ecommercee.domain.user;
 
+import com.kodilla.ecommercee.domain.order.Order;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+@Getter
+@AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity(name = "user")
 public class User {
-    // temporary
     @Id
     @GeneratedValue
-    @Column(name = "USER_ID")
-    private long id;
+    @EqualsAndHashCode.Include
+    @Column(name = "user_id")
+    private Long userId;
+
+    @OneToMany(
+            targetEntity = Order.class,
+            mappedBy = "orderId",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    public List<Order> order = new ArrayList<>();
+
 }
