@@ -14,8 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Entity
+@Table(name="GROUPS")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity(name="product_group")
 public class Group {
     @Id
     @GeneratedValue
@@ -34,4 +35,8 @@ public class Group {
             fetch = FetchType.EAGER
     )
     private List<Product> products = new ArrayList<>();
+
+    public Group(String name) {
+        this.name = name;
+    }
 }
