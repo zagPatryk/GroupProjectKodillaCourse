@@ -27,6 +27,37 @@ public class OrderTestSuit {
         Order order = new Order();
         //When
         orderDao.save(order);
+        long id = order.getOrderId();
+        Optional<Order> checkOrder = orderDao.findById(id);
+        //Then
+        assertTrue(checkOrder.isPresent());
+        //Clean Up
+        orderDao.deleteById(id);
+    }
+
+    @Test
+    public void testUpdateOrder() {
+        //Given
+        Order order = new Order();
+        //When
+        orderDao.save(order);
+        long id = order.getOrderId();
+        Optional<Order> checkOrder = orderDao.findById(id);
+
+        //Then
+
+        System.out.println(id);
+        assertTrue(checkOrder.isPresent());
+        //Clean Up
+        orderDao.deleteById(id);
+    }
+
+    @Test
+    public void testReadOrder() {
+        //Given
+        Order order = new Order();
+        //When
+        orderDao.save(order);
         //Then
         long id = order.getOrderId();
         Optional<Order> checkOrder = orderDao.findById(id);
@@ -37,7 +68,17 @@ public class OrderTestSuit {
     }
 
     @Test
-    public void testUpdateOrder() {
-        
+    public void testDeleteOrder() {
+        //Given
+        Order order = new Order();
+        //When
+        orderDao.save(order);
+        //Then
+        long id = order.getOrderId();
+        Optional<Order> checkOrder = orderDao.findById(id);
+        //Clean Up
+        orderDao.deleteById(id);
+
+        //assertTrue(!checkOrder.isPresent());
     }
 }
