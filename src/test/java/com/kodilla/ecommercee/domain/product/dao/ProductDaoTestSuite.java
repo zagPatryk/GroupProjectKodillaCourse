@@ -5,6 +5,8 @@ import com.kodilla.ecommercee.domain.cart.dao.CartDao;
 import com.kodilla.ecommercee.domain.group.Group;
 import com.kodilla.ecommercee.domain.group.dao.GroupDao;
 import com.kodilla.ecommercee.domain.product.Product;
+import com.kodilla.ecommercee.domain.user.User;
+import com.kodilla.ecommercee.domain.user.dao.UserDao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +18,7 @@ import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Transactional
+//@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProductDaoTestSuite {
@@ -26,6 +28,8 @@ public class ProductDaoTestSuite {
     private CartDao cartDao;
     @Autowired
     private GroupDao groupDao;
+    @Autowired
+    private UserDao userDao;
 
     @Test
     public void testCreateAndReadProduct() {
@@ -167,15 +171,17 @@ public class ProductDaoTestSuite {
         // Given
         Product product = new Product("test", "testProduct", 100.0);
         Group group = new Group("kurtka");
-        Cart cart = new Cart();
+        User user = new User();
+        Cart cart = new Cart(user);
 
         product.addGroup(group);
         cart.addProduct(product);
 
         // When
+        userDao.save(user);
         groupDao.save(group);
-        productDao.save(product);
         cartDao.save(cart);
+        productDao.save(product);
 
         Long groupId = group.getId();
         Long productId = product.getId();

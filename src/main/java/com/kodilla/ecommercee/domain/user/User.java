@@ -26,8 +26,8 @@ public class User {
     @OneToMany(
             targetEntity = Order.class,
             mappedBy = "orderId",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            cascade = CascadeType.ALL
+//            fetch = FetchType.EAGER
     )
     public List<Order> order = new ArrayList<>();
 

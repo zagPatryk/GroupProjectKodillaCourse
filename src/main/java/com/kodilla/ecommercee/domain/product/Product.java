@@ -32,7 +32,7 @@ public class Product {
     @Column(name="PRICE")
     private double price;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "JOIN_PRODUCT_CART",
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")},
