@@ -75,11 +75,13 @@ public class ProductDaoTestSuite {
     public void testCreateAndReadProductWithCart() {
         // Given
         Product product = new Product("test", "testProduct", 100.0);
-        Cart cart = new Cart();
+        User user = new User();
+        Cart cart = new Cart(user);
 
         cart.addProduct(product);
 
         // When
+        userDao.save(user);
         cartDao.save(cart);
         productDao.save(product);
 
@@ -106,15 +108,17 @@ public class ProductDaoTestSuite {
         Group group = new Group("kurtka");
         Group newGroup = new Group("sweter");
 
-        Cart cart = new Cart();
-        Cart newCart = new Cart();
+        User user = new User();
+
+        Cart cart = new Cart(user);
+        Cart newCart = new Cart(user);
 
         product.addGroup(group);
         cart.addProduct(product);
 
         // When
-        cartDao.save(cart);
-        cartDao.save(newCart);
+        userDao.save(user);
+        cartDao.saveAll(Arrays.asList(cart, newCart));
         groupDao.saveAll(Arrays.asList(group, newGroup));
         productDao.save(product);
 
@@ -137,7 +141,7 @@ public class ProductDaoTestSuite {
         productDbEntry.addGroup(newGroup);
         newCart.addProduct(productDbEntry);
 
-        cartDao.save(cart);
+//        cartDao.save(cart);
         productDao.save(productDbEntry);
 
         productDbEntry = productDao.findById(productId).orElse(new Product());

@@ -31,7 +31,6 @@ public class Group {
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "groupId",
-//            cascade = CascadeType.PERSIST,
             fetch = FetchType.EAGER
     )
     private List<Product> products = new ArrayList<>();
