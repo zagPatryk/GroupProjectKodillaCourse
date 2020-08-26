@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.domain.product.dao;
 
-import com.kodilla.ecommercee.data.CartEntity;
-import com.kodilla.ecommercee.domain.cart.dao.CartDaoStub;
+import com.kodilla.ecommercee.domain.cart.Cart;
+import com.kodilla.ecommercee.domain.cart.dao.CartDao;
 import com.kodilla.ecommercee.domain.group.Group;
 import com.kodilla.ecommercee.domain.group.dao.GroupDao;
 import com.kodilla.ecommercee.domain.product.Product;
@@ -14,9 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 @Transactional
 @RunWith(SpringRunner.class)
@@ -25,7 +23,7 @@ public class ProductDaoTestSuite {
     @Autowired
     private ProductDao productDao;
     @Autowired
-    private CartDaoStub cartDaoStub;
+    private CartDao cartDao;
     @Autowired
     private GroupDao groupDao;
 
@@ -73,12 +71,12 @@ public class ProductDaoTestSuite {
     public void testCreateAndReadProductWithCart() {
         // Given
         Product product = new Product("test", "testProduct", 100.0);
-        CartEntity cart = new CartEntity();
+        Cart cart = new Cart();
 
         cart.addProduct(product);
 
         // When
-        cartDaoStub.save(cart);
+        cartDao.save(cart);
         productDao.save(product);
 
         Long productId = product.getId();
@@ -86,11 +84,11 @@ public class ProductDaoTestSuite {
 
         // Then
         Assert.assertEquals(product, productDao.findById(productId).orElse(new Product()));
-        Assert.assertTrue(product.getCarts().contains(cartDaoStub.findById(cartId).orElse(new CartEntity())));
+        Assert.assertTrue(product.getCarts().contains(cartDao.findById(cartId).orElse(new Cart())));
 
         // Clean-up
         productDao.deleteById(productId);
-        cartDaoStub.deleteById(cartId);
+        cartDao.deleteById(cartId);
     }
 
     @Test
@@ -104,15 +102,15 @@ public class ProductDaoTestSuite {
         Group group = new Group("kurtka");
         Group newGroup = new Group("sweter");
 
-        CartEntity cart = new CartEntity();
-        CartEntity newCart = new CartEntity();
+        Cart cart = new Cart();
+        Cart newCart = new Cart();
 
         product.addGroup(group);
         cart.addProduct(product);
 
         // When
-        cartDaoStub.save(cart);
-        cartDaoStub.save(newCart);
+        cartDao.save(cart);
+        cartDao.save(newCart);
         groupDao.saveAll(Arrays.asList(group, newGroup));
         productDao.save(product);
 
@@ -135,7 +133,7 @@ public class ProductDaoTestSuite {
         productDbEntry.addGroup(newGroup);
         newCart.addProduct(productDbEntry);
 
-        cartDaoStub.save(cart);
+        cartDao.save(cart);
         productDao.save(productDbEntry);
 
         productDbEntry = productDao.findById(productId).orElse(new Product());
@@ -147,7 +145,7 @@ public class ProductDaoTestSuite {
         productDao.deleteById(productId);
 
         Long cartId = cart.getId();
-        cartDaoStub.deleteById(cartId);
+        cartDao.deleteById(cartId);
 
         Long groupId = group.getId();
         Long newGroupId = newGroup.getId();
@@ -155,7 +153,7 @@ public class ProductDaoTestSuite {
         groupDao.deleteById(newGroupId);
     }
 
-    private void assertsForTestUpdateProduct(Product product, String name, String desc, double price, int cartsCount, CartEntity presentCart, Group group) {
+    private void assertsForTestUpdateProduct(Product product, String name, String desc, double price, int cartsCount, Cart presentCart, Group group) {
         Assert.assertEquals(name, product.getName());
         Assert.assertEquals(desc, product.getDescription());
         Assert.assertEquals(price, product.getPrice(), 0);
@@ -169,7 +167,7 @@ public class ProductDaoTestSuite {
         // Given
         Product product = new Product("test", "testProduct", 100.0);
         Group group = new Group("kurtka");
-        CartEntity cart = new CartEntity();
+        Cart cart = new Cart();
 
         product.addGroup(group);
         cart.addProduct(product);
@@ -177,7 +175,7 @@ public class ProductDaoTestSuite {
         // When
         groupDao.save(group);
         productDao.save(product);
-        cartDaoStub.save(cart);
+        cartDao.save(cart);
 
         Long groupId = group.getId();
         Long productId = product.getId();
@@ -186,8 +184,8 @@ public class ProductDaoTestSuite {
         productDao.deleteById(productId);
 
         // Then
-        Assert.assertTrue(cartDaoStub.findById(cartId).isPresent());
-        Assert.assertEquals(0, cartDaoStub.findById(cartId).get().getProductsList().size());
+        Assert.assertTrue(cartDao.findById(cartId).isPresent());
+        Assert.assertEquals(0, cartDao.findById(cartId).get().getProductsList().size());
 
         Assert.assertTrue(groupDao.findById(groupId).isPresent());
         Assert.assertEquals(0, groupDao.findById(groupId).get().getProducts().size());
