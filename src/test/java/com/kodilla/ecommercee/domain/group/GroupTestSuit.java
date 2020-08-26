@@ -110,7 +110,7 @@ public class GroupTestSuit {
     @Test
     public void testUpdateGroup() {
         // Given
-        Group group = new Group(null, "text");
+        Group group = new Group("text");
 
         // When
         groupDao.save(group);
