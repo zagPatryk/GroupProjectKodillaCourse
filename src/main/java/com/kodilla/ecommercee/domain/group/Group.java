@@ -1,10 +1,7 @@
 package com.kodilla.ecommercee.domain.group;
 
 import com.kodilla.ecommercee.domain.product.Product;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,8 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Entity
-@Table(name="GROUPS")
+@Table(name="`GROUP`")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Group {
     @Id
