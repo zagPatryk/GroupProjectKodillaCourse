@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="GROUPS")
+@Table(name="`GROUP`")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Group {
     @Id
