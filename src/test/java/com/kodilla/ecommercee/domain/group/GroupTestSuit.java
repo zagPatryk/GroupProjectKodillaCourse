@@ -101,7 +101,6 @@ public class GroupTestSuit {
         // When
         groupDao.save(group);
         long id = group.getId();
-
         groupDao.deleteById(id);
 
         // Then
@@ -111,32 +110,29 @@ public class GroupTestSuit {
     @Test
     public void testUpdateGroup() {
         // Given
-        Group group = new Group(1L, "test");
+        Group group = new Group(null, "text");
 
         // When
         groupDao.save(group);
-        Long id = group.getId();
-        Group groupDaoId1 = groupDao.findById(id).orElse(group);
+        Long id1 = group.getId();
+        Group groupDaoId1 = groupDao.findById(id1).orElse(group);
 
         // Then
         Assert.assertEquals(group.getId(), groupDaoId1.getId(), 0);
-        Assert.assertEquals(group.getName(), groupDaoId1.getName());
+        Assert.assertEquals("text", groupDaoId1.getName());
 
         // Update
-        group.setId(2L);
-        group.setName("test2");
+        group.setName("newText");
 
         // When
         groupDao.save(group);
-        Long id2 = group.getId();
-        Group groupDaoId2 = groupDao.findById(id2).orElse(group);
+        Group groupDaoId2 = groupDao.findById(id1).orElse(group);
 
         // Then
         Assert.assertEquals(group.getId(), groupDaoId2.getId(), 0);
-        Assert.assertEquals(group.getName(), groupDaoId2.getName());
+        Assert.assertEquals("newText", groupDaoId2.getName());
 
         // Clean-up
-        groupDao.deleteById(id);
-        groupDao.deleteById(id2);
+        groupDao.deleteById(id1);
     }
 }
