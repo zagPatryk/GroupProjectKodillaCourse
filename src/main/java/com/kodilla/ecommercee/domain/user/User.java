@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.domain.user;
 
 import com.kodilla.ecommercee.domain.order.Order;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,10 +14,12 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity(name = "user")
 public class User {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     @Column(name = "user_id")
     private Long userId;
 
@@ -27,4 +30,5 @@ public class User {
             fetch = FetchType.EAGER
     )
     public List<Order> order = new ArrayList<>();
+
 }

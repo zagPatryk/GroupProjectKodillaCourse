@@ -1,8 +1,8 @@
 package com.kodilla.ecommercee.domain.group;
 
-import com.kodilla.ecommercee.GenericEntity;
 import com.kodilla.ecommercee.domain.product.Product;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,10 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Entity(name="product_group")
+@Entity
+@Table(name="GROUPS")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Group {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     @NotNull
     @Column(name = "GROUP_ID")
     private Long id;
@@ -32,4 +35,8 @@ public class Group {
             fetch = FetchType.EAGER
     )
     private List<Product> products = new ArrayList<>();
+
+    public Group(String name) {
+        this.name = name;
+    }
 }

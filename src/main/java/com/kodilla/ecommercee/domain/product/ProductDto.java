@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ProductDtoStub {
+public class ProductDto {
     // This is just a placeholder class, in absence of solidified Product entity, and its DTO.
     private Long id;
     private String name;
