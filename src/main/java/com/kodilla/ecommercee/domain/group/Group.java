@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Entity
-@Table(name="GROUPS")
+@Table(name="`GROUP`")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Group {
     @Id
