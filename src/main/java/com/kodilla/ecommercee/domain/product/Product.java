@@ -32,7 +32,7 @@ public class Product {
     @Column(name="PRICE")
     private double price;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "JOIN_PRODUCT_CART",
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")},
@@ -58,5 +58,10 @@ public class Product {
     public void addToCart(Cart cart) {
         this.carts.add(cart);
         cart.getProductsList().add(this);
+    }
+
+    public void addGroup(Group group) {
+        group.getProducts().add(this);
+        this.groupId = group;
     }
 }

@@ -30,7 +30,7 @@ public class Cart {
     @Column(name = "CART_ID")
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "carts")
+    @ManyToMany(mappedBy = "carts", fetch = FetchType.EAGER)
     private List<Product> productsList = new ArrayList<>();
 
     @OneToOne
@@ -38,7 +38,7 @@ public class Cart {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
 
