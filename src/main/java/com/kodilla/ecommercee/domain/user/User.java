@@ -42,4 +42,5 @@ public class User {
         this.status = status;
         this.userKey = userKey;
     }
+
 }
