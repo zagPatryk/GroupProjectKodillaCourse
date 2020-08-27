@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.domain.user;
 
+import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.order.Order;
 import lombok.*;
 
@@ -37,10 +38,16 @@ public class User {
     )
     public List<Order> order = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")
+    private Cart cart;
+
     public User(String username, int status, int userKey) {
         this.username = username;
         this.status = status;
         this.userKey = userKey;
     }
+
+
 
 }
