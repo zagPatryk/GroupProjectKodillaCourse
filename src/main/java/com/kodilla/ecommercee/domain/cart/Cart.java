@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
@@ -30,7 +29,8 @@ public class Cart {
     @Column(name = "CART_ID")
     private Long id;
 
-    @ManyToMany(mappedBy = "carts", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "carts", fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE)
     private List<Product> productsList = new ArrayList<>();
 
     @OneToOne
@@ -41,7 +41,6 @@ public class Cart {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
-
 
     public void addProduct(Product product) {
         productsList.add(product);
@@ -55,10 +54,16 @@ public class Cart {
     public Cart(User user, Product... products) {
         this.user = user;
         productsList.addAll(Arrays.asList(products));
+        for (Product product : products) {
+            product.getCarts().add(this);
+        }
     }
 
     public Cart(User user, List<Product> productsList) {
         this.user = user;
         this.productsList = productsList;
+        for (Product product : productsList) {
+            product.getCarts().add(this);
+        }
     }
 }
