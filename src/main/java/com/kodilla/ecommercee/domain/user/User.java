@@ -24,6 +24,7 @@ public class User {
     private Long userId;
 
     @OneToMany(
+            cascade = CascadeType.ALL,
             targetEntity = Order.class,
             mappedBy = "orderId"
     )
