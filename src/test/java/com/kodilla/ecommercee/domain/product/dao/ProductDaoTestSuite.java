@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Objects;
 
-//@Transactional
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProductDaoTestSuite {
