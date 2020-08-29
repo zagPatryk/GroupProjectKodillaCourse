@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-@Transactional
+//@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class OrderTestSuit {
@@ -44,7 +44,8 @@ public class OrderTestSuit {
     public void testReadOrder() {
         //Given
         Order order1 = new Order();
-        Order order2 = new Order(new User(), new Cart());
+        User user = new User();
+        Order order2 = new Order(user, new Cart(user));
         //When
         orderDao.save(order1);
         orderDao.save(order2);
