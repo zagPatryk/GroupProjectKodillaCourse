@@ -38,11 +38,6 @@ public class Cart {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id", referencedColumnName = "order_id")
-    private Order order;
-
-
     public void addProduct(Product product) {
         productsList.add(product);
         product.getCarts().add(this);
