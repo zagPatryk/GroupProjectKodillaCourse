@@ -1,16 +1,17 @@
 package com.kodilla.ecommercee.domain.order;
 
 import com.kodilla.ecommercee.domain.cart.Cart;
+import com.kodilla.ecommercee.domain.product.Product;
 import com.kodilla.ecommercee.domain.user.User;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -24,11 +25,20 @@ public class Order {
     @Column(name="order_id")
     private Long orderId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
-    private Cart cart;
+    @NotNull
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            mappedBy = "orders" ,
+            fetch = FetchType.EAGER)
+    private List<Product> orderList = new ArrayList<>();
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
+
+    public Order(User user, Cart cart) {
+        this.user = user;
+        this.orderList = cart.getProductsList();
+    }
 }
