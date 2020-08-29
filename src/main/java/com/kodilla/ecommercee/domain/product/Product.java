@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.domain.product;
 
 import com.kodilla.ecommercee.domain.group.Group;
 import com.kodilla.ecommercee.domain.cart.Cart;
+import com.kodilla.ecommercee.domain.order.Order;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,6 +40,14 @@ public class Product {
             inverseJoinColumns = {@JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")}
     )
     private List<Cart> carts = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "JOIN_PRODUCT_ORDER",
+            joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")}
+    )
+    private List<Order> orders = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")
