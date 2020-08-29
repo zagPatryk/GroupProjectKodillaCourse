@@ -29,7 +29,6 @@ public class Order {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
             mappedBy = "orders" ,
             fetch = FetchType.EAGER)
-    @JoinColumn(name = "products")
     private List<Product> orderList = new ArrayList<>();
 
     @NotNull
