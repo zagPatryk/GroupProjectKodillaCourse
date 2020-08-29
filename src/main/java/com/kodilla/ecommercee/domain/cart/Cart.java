@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.domain.cart;
 
-import com.kodilla.ecommercee.domain.order.Order;
 import com.kodilla.ecommercee.domain.product.Product;
 
 import com.kodilla.ecommercee.domain.user.User;
@@ -15,7 +14,6 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
