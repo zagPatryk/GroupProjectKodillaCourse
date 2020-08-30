@@ -95,6 +95,7 @@ public class ProductDaoTestSuite {
         // Clean-up
         productDao.deleteById(productId);
         cartDao.deleteById(cartId);
+        userDao.deleteById(user.getId());
     }
 
     @Test
@@ -151,14 +152,11 @@ public class ProductDaoTestSuite {
 
         // Clean-up
         productDao.deleteById(productId);
-
-        Long cartId = cart.getId();
-        cartDao.deleteById(cartId);
-
-        Long groupId = group.getId();
-        Long newGroupId = newGroup.getId();
-        groupDao.deleteById(groupId);
-        groupDao.deleteById(newGroupId);
+        groupDao.deleteById(group.getId());
+        groupDao.deleteById(newGroup.getId());
+        cartDao.deleteById(cart.getId());
+        cartDao.deleteById(newCart.getId());
+        userDao.deleteById(user.getId());
     }
 
     private void assertsForTestUpdateProduct(Product product, String name, String desc, double price, int cartsCount, Cart presentCart, Group group) {
@@ -199,5 +197,10 @@ public class ProductDaoTestSuite {
 
         Assert.assertTrue(groupDao.findById(groupId).isPresent());
         Assert.assertEquals(0, groupDao.findById(groupId).get().getProducts().size());
+
+        // Clean-up
+        groupDao.deleteById(group.getId());
+        cartDao.deleteById(cart.getId());
+        userDao.deleteById(user.getId());
     }
 }
