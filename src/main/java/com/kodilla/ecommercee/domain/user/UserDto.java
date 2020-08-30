@@ -1,16 +1,15 @@
 package com.kodilla.ecommercee.domain.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class UserDto {
 
     private Long id;
-    private Long userkey;
     private String username;
-    private String password;
-    private String address;
-    private boolean isActive;
-
+    private int status;
+    private long userKey;
 
 }

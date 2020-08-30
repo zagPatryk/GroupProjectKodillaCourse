@@ -19,8 +19,8 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getUserKey")
     public Long getUserKey(@RequestParam long userId){
-        UserDto userDto = new UserDto();
-        long userkey = userDto.getUserkey();
+        UserDto userDto = new UserDto(1L,"user1", 1, 9999);
+        long userkey = userDto.getUserKey();
         System.out.println("UserKey for user " + userId + ": " + userkey);
         return userkey;
     }
