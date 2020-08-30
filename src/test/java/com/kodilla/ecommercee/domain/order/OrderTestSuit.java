@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.domain.order;
 import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.cart.dao.CartDao;
 import com.kodilla.ecommercee.domain.order.dao.OrderDao;
+import com.kodilla.ecommercee.domain.product.Product;
 import com.kodilla.ecommercee.domain.user.User;
 import com.kodilla.ecommercee.domain.user.dao.UserDao;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -24,17 +26,19 @@ public class OrderTestSuit {
     private OrderDao orderDao;
     @Autowired
     private CartDao cartDao;
+    @Autowired
+    private UserDao userDao;
 
     @Test
     public void testCreateOrder() {
         //Given
-        Order order = new Order();
+        User user = new User();
+        Order order = new Order(user, new Cart(user));
         //When
         orderDao.save(order);
         //Then
         long id = order.getOrderId();
         Optional<Order> checkOrder = orderDao.findById(id);
-        System.out.println(id);
         assertTrue(checkOrder.isPresent());
         //Clean Up
         orderDao.deleteById(id);
@@ -43,64 +47,70 @@ public class OrderTestSuit {
     @Test
     public void testReadOrder() {
         //Given
-        Order order1 = new Order();
         User user = new User();
-        Order order2 = new Order(user, new Cart(user));
+        Cart cart = new Cart(user);
+        Order order = new Order(user, cart);
         //When
-        orderDao.save(order1);
-        orderDao.save(order2);
-        long id1 = order1.getOrderId();
-        long id2 = order2.getOrderId();
-        Optional<Order> checkOrder1 = orderDao.findById(id1);
-        Optional<Order> checkOrder2 = orderDao.findById(id2);
-        User user1 = checkOrder1.get().getUser();
-        Cart cart2 = checkOrder2.get().getCart();
+        orderDao.save(order);
+        cartDao.save(cart);
+        long orderId = order.getOrderId();
+        long cartId = cart.getId();
+        long userId = user.getId();
+        Optional<Order> checkOrder = orderDao.findById(orderId);
+        User checkUser = checkOrder.get().getUser();
+        List<Product> productsList = checkOrder.get().getOrderList();
         //Then
-        assertEquals(checkOrder1, Optional.of(order1));
-        assertEquals(checkOrder2, Optional.of(order2));
-        assertEquals(null, user1);
-        assertEquals(order2.getCart(), cart2);
+        assertEquals(checkOrder, Optional.of(order));
+        assertEquals(user, checkUser);
+        assertEquals(order.getOrderList().size(), productsList.size());
         //Clean Up
-        orderDao.deleteById(id1);
-        orderDao.deleteById(id2);
-    }
+        orderDao.deleteById(orderId);
+        cartDao.deleteById(cartId);
+        userDao.deleteById(userId);    }
 
     @Test
     public void testUpdateOrder() {
         //Given
-        Order order1 = new Order();
-        Order order2 = new Order(new User(), new Cart());
+        User user = new User();
+        Cart cart = new Cart(user);
+        Order order = new Order(user, cart);
         //When
-        orderDao.save(order1);
-        orderDao.save(order2);
-        long id1 = order1.getOrderId();
-        long id2 = order2.getOrderId();
-        Optional<Order> checkOrder1 = orderDao.findById(id1);
-        Optional<Order> checkOrder2 = orderDao.findById(id2);
-        User user1 = checkOrder1.get().getUser();
-        Cart cart2 = checkOrder2.get().getCart();
-        //Then
-        order1.setUser(new User());
-        order2.setCart(new Cart());
-        orderDao.save(order1);
-        orderDao.save(order2);
-        User updatedUser1 = checkOrder1.get().getUser();
-        Cart updatedCart2 = checkOrder2.get().getCart();
+        orderDao.save(order);
+        cartDao.save(cart);
+        long orderId = order.getOrderId();
+        long cartId = cart.getId();
+        long userId = user.getId();
+        Optional<Order> checkOrder1 = orderDao.findById(orderId);
+        User checkUser = checkOrder1.get().getUser();
+        List<Product> checkList = checkOrder1.get().getOrderList();
 
-        assertNotEquals(user1, updatedUser1);
-        assertNotEquals(cart2, updatedCart2);
+        //Then
+        order.setUser(new User());
+        order.setOrderList(new Cart(new User()).getProductsList());
+        orderDao.save(order);
+        Optional<Order> updatedOrder = orderDao.findById(orderId);
+        User updatedUser = updatedOrder.get().getUser();
+        List<Product> updatedList = updatedOrder.get().getOrderList();
+
+        assertNotEquals(checkUser, updatedUser);
+        assertNotEquals(checkList, updatedList);
         //Clean Up
-        orderDao.deleteById(id1);
-        orderDao.deleteById(id2);
+        orderDao.deleteById(orderId);
+        cartDao.deleteById(cartId);
+        userDao.deleteById(userId);
     }
 
     @Test
     public void testDeleteOrder() {
         //Given
-        Order order = new Order();
+        User user = new User();
+        Cart cart = new Cart(user);
+        Order order = new Order(user, cart);
+
         orderDao.save(order);
         long id = order.getOrderId();
         Optional<Order> checkOrder = orderDao.findById(id);
+        assertTrue(checkOrder.isPresent());
         //When
         orderDao.deleteById(id);
         Optional<Order> checkDeletedOrder = orderDao.findById(id);
@@ -112,11 +122,12 @@ public class OrderTestSuit {
     public void testDeleteOrderWithoutDeleteComponents() {
         //Given
         User user = new User();
-        Cart cart = new Cart();
+        Cart cart = new Cart(user);
         Order order = new Order(user, cart);
 
         orderDao.save(order);
         cartDao.save(cart);
+        long userId = user.getId();
         long orderId = order.getOrderId();
         long cartId = cart.getId();
         //When
@@ -136,5 +147,6 @@ public class OrderTestSuit {
         assertTrue(checkUndeletedCart.isPresent());
         //Clean Up
         cartDao.deleteById(cartId);
+        userDao.deleteById(userId);
     }
 }
