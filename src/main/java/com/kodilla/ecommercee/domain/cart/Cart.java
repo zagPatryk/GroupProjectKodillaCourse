@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.domain.cart;
 
-import com.kodilla.ecommercee.domain.order.Order;
 import com.kodilla.ecommercee.domain.product.Product;
 
 import com.kodilla.ecommercee.domain.user.User;
@@ -37,10 +36,6 @@ public class Cart {
     @NotNull
     @JoinColumn(name = "USER_ID")
     private User user;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id", referencedColumnName = "order_id")
-    private Order order;
 
     public void addProduct(Product product) {
         productsList.add(product);

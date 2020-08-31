@@ -1,32 +1,53 @@
 package com.kodilla.ecommercee.domain.user;
 
+import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.order.Order;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity(name = "user")
+@Entity(name = "User")
 public class User {
     @Id
-    @GeneratedValue
     @EqualsAndHashCode.Include
-    @Column(name = "user_id")
-    private Long userId;
+    @GeneratedValue
+    @NotNull
+    @Column(name = "USER_ID")
+    private Long id;
+
+    @Column(name = "USERNAME")
+    private String username;
+
+    @Column(name = "STATUS")
+    private int status;
+
+    @Column(name = "USER_KEY")
+    private int userKey;
 
     @OneToMany(
             targetEntity = Order.class,
             mappedBy = "orderId"
     )
     public List<Order> order = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")
+    private Cart cart;
+
+    public User(String username, int status, int userKey) {
+        this.username = username;
+        this.status = status;
+        this.userKey = userKey;
+    }
+
+
 
 }
