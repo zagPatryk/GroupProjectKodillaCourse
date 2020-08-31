@@ -34,7 +34,7 @@ public class User {
 
     @OneToMany(
             targetEntity = Order.class,
-            mappedBy = "orderId"
+            mappedBy = "user"
     )
     public List<Order> order = new ArrayList<>();
 
