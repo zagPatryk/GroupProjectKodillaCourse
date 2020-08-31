@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 //@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrderTestSuit {
+public class OrderTestSuite {
     @Autowired
     private OrderDao orderDao;
     @Autowired
