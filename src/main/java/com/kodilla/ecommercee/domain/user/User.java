@@ -35,7 +35,7 @@ public class User {
     @OneToMany(
             cascade = CascadeType.ALL,
             targetEntity = Order.class,
-            mappedBy = "orderId"
+            mappedBy = "user"
     )
     public List<Order> order = new ArrayList<>();
 

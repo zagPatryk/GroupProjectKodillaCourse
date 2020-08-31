@@ -4,6 +4,7 @@ import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.cart.dao.CartDao;
 import com.kodilla.ecommercee.domain.order.dao.OrderDao;
 import com.kodilla.ecommercee.domain.product.Product;
+import com.kodilla.ecommercee.domain.product.dao.ProductDao;
 import com.kodilla.ecommercee.domain.user.User;
 import com.kodilla.ecommercee.domain.user.dao.UserDao;
 import org.junit.Test;
@@ -28,6 +29,8 @@ public class OrderTestSuit {
     private CartDao cartDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private ProductDao productDao;
 
     @Test
     public void testCreateOrder() {
@@ -122,31 +125,32 @@ public class OrderTestSuit {
     public void testDeleteOrderWithoutDeleteComponents() {
         //Given
         User user = new User();
-        Cart cart = new Cart(user);
+        Product product = new Product("test", "test product", 10);
+        Cart cart = new Cart(user, product);
         Order order = new Order(user, cart);
 
         orderDao.save(order);
-        cartDao.save(cart);
+        productDao.save(product);
         long userId = user.getId();
         long orderId = order.getOrderId();
-        long cartId = cart.getId();
+        long productId = product.getId();
         //When
         Optional<Order> checkOrder = orderDao.findById(orderId);
-        Optional<Cart> checkCart = cartDao.findById(cartId);
+        Optional<Product> checkProduct = productDao.findById(productId);
 
         assertTrue(checkOrder.isPresent());
-        assertTrue(checkCart.isPresent());
+        assertTrue(checkProduct.isPresent());
 
         orderDao.deleteById(orderId);
 
         Optional<Order> checkDeletedOrder = orderDao.findById(orderId);
-        Optional<Cart> checkUndeletedCart = cartDao.findById(cartId);
+        Optional<Product> checkUndeletedProduct = productDao.findById(productId);
 
         //Then
         assertFalse(checkDeletedOrder.isPresent());
-        assertTrue(checkUndeletedCart.isPresent());
+        assertTrue(checkUndeletedProduct.isPresent());
         //Clean Up
-        cartDao.deleteById(cartId);
+        productDao.deleteById(productId);
         userDao.deleteById(userId);
     }
 }
