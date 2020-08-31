@@ -73,9 +73,9 @@ public class CartTestSuite {
         cartDao.deleteById(cart2.getId());
         cartDao.deleteById(cart3.getId());
 
-        userDao.deleteById(user1.getUserId());
-        userDao.deleteById(user2.getUserId());
-        userDao.deleteById(user3.getUserId());
+        userDao.deleteById(user1.getId());
+        userDao.deleteById(user2.getId());
+        userDao.deleteById(user3.getId());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class CartTestSuite {
 
         //CleanUp
         cartDao.deleteById(cart.getId());
-        userDao.deleteById(user.getUserId());
+        userDao.deleteById(user.getId());
     }
 
     @Test
@@ -127,7 +127,7 @@ public class CartTestSuite {
         productDao.deleteById(product1.getId());
         productDao.deleteById(product2.getId());
         cartDao.deleteById(cart.getId());
-        userDao.deleteById(user.getUserId());
+        userDao.deleteById(user.getId());
     }
 
     @Test
@@ -145,6 +145,6 @@ public class CartTestSuite {
         Assert.assertFalse(cartDao.findById(cart.getId()).isPresent());
 
         //CleanUp
-        userDao.deleteById(user.getUserId());
+        userDao.deleteById(user.getId());
     }
 }
