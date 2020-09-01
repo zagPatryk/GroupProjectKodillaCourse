@@ -124,15 +124,20 @@ public class OrderTestSuite {
     @Test
     public void testDeleteOrderWithoutDeleteComponents() {
         //Given
-        User user = new User();
+        User user = new User("nick", 1,1);
         Product product = new Product("test", "test product", 10);
         Cart cart = new Cart(user, product);
         Order order = new Order(user, cart);
 
-        orderDao.save(order);
+        userDao.save(user);
         productDao.save(product);
+        cartDao.save(cart);
+        orderDao.save(order);
+
+
         long userId = user.getId();
         long orderId = order.getOrderId();
+        long cartId = cart.getId();
         long productId = product.getId();
         //When
         Optional<Order> checkOrder = orderDao.findById(orderId);
@@ -151,6 +156,7 @@ public class OrderTestSuite {
         assertTrue(checkUndeletedProduct.isPresent());
         //Clean Up
         productDao.deleteById(productId);
+        cartDao.deleteById(cartId);
         userDao.deleteById(userId);
     }
 }
