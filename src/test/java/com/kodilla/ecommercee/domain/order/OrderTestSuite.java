@@ -130,10 +130,9 @@ public class OrderTestSuite {
         Order order = new Order(user, cart);
 
         userDao.save(user);
-        productDao.save(product);
         cartDao.save(cart);
         orderDao.save(order);
-
+        productDao.save(product);
 
         long userId = user.getId();
         long orderId = order.getOrderId();
