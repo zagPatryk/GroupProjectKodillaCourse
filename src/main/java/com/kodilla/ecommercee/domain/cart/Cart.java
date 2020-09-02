@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +32,6 @@ public class Cart {
     private List<Product> productsList = new ArrayList<>();
 
     @OneToOne
-    @NotNull
     @JoinColumn(name = "USER_ID")
     private User user;
 
