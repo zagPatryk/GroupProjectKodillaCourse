@@ -19,7 +19,6 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-//@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class OrderTestSuite {
@@ -38,6 +37,7 @@ public class OrderTestSuite {
         User user = new User();
         Order order = new Order(user, new Cart(user));
         //When
+        userDao.save(user);
         orderDao.save(order);
         //Then
         long id = order.getOrderId();
@@ -45,6 +45,7 @@ public class OrderTestSuite {
         assertTrue(checkOrder.isPresent());
         //Clean Up
         orderDao.deleteById(id);
+        userDao.deleteById(user.getId());
     }
 
     @Test
@@ -53,19 +54,25 @@ public class OrderTestSuite {
         User user = new User();
         Cart cart = new Cart(user);
         Order order = new Order(user, cart);
+
         //When
+        userDao.save(user);
         orderDao.save(order);
         cartDao.save(cart);
+
         long orderId = order.getOrderId();
         long cartId = cart.getId();
         long userId = user.getId();
+
         Optional<Order> checkOrder = orderDao.findById(orderId);
         User checkUser = checkOrder.get().getUser();
         List<Product> productsList = checkOrder.get().getOrderList();
+
         //Then
         assertEquals(checkOrder, Optional.of(order));
         assertEquals(user, checkUser);
         assertEquals(order.getOrderList().size(), productsList.size());
+
         //Clean Up
         orderDao.deleteById(orderId);
         cartDao.deleteById(cartId);
@@ -77,19 +84,25 @@ public class OrderTestSuite {
         User user = new User();
         Cart cart = new Cart(user);
         Order order = new Order(user, cart);
+
         //When
+        userDao.save(user);
         orderDao.save(order);
         cartDao.save(cart);
+
         long orderId = order.getOrderId();
         long cartId = cart.getId();
         long userId = user.getId();
+
         Optional<Order> checkOrder1 = orderDao.findById(orderId);
         User checkUser = checkOrder1.get().getUser();
         List<Product> checkList = checkOrder1.get().getOrderList();
 
         //Then
-        order.setUser(new User());
-        order.setOrderList(new Cart(new User()).getProductsList());
+        User newUser = new User();
+        userDao.save(newUser);
+        order.setUser(newUser);
+        order.setOrderList(new Cart(newUser).getProductsList());
         orderDao.save(order);
         Optional<Order> updatedOrder = orderDao.findById(orderId);
         User updatedUser = updatedOrder.get().getUser();
@@ -97,10 +110,12 @@ public class OrderTestSuite {
 
         assertNotEquals(checkUser, updatedUser);
         assertNotEquals(checkList, updatedList);
+
         //Clean Up
         orderDao.deleteById(orderId);
         cartDao.deleteById(cartId);
         userDao.deleteById(userId);
+        userDao.deleteById(newUser.getId());
     }
 
     @Test
@@ -110,15 +125,23 @@ public class OrderTestSuite {
         Cart cart = new Cart(user);
         Order order = new Order(user, cart);
 
+        userDao.save(user);
         orderDao.save(order);
+
         long id = order.getOrderId();
+
         Optional<Order> checkOrder = orderDao.findById(id);
         assertTrue(checkOrder.isPresent());
+
         //When
         orderDao.deleteById(id);
         Optional<Order> checkDeletedOrder = orderDao.findById(id);
+
         //Then
         assertFalse(checkDeletedOrder.isPresent());
+
+        //Clean up
+        userDao.deleteById(user.getId());
     }
 
     @Test
@@ -138,6 +161,7 @@ public class OrderTestSuite {
         long orderId = order.getOrderId();
         long cartId = cart.getId();
         long productId = product.getId();
+
         //When
         Optional<Order> checkOrder = orderDao.findById(orderId);
         Optional<Product> checkProduct = productDao.findById(productId);
@@ -145,6 +169,8 @@ public class OrderTestSuite {
         assertTrue(checkOrder.isPresent());
         assertTrue(checkProduct.isPresent());
 
+        product.getOrders().remove(order);
+        productDao.save(product);
         orderDao.deleteById(orderId);
 
         Optional<Order> checkDeletedOrder = orderDao.findById(orderId);
@@ -153,6 +179,7 @@ public class OrderTestSuite {
         //Then
         assertFalse(checkDeletedOrder.isPresent());
         assertTrue(checkUndeletedProduct.isPresent());
+
         //Clean Up
         productDao.deleteById(productId);
         cartDao.deleteById(cartId);
