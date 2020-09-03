@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.product.ProductDto;
+import com.kodilla.ecommercee.domain.product.ProductDtoStub;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,25 +14,25 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getProducts")
-    public List<ProductDto> getAllProducts() {
+    public List<ProductDtoStub> getAllProducts() {
         return IntStream.range(0, 10)
-                .mapToObj(e -> new ProductDto((long) e, "TestProduct" + e))
+                .mapToObj(e -> new ProductDtoStub((long) e, "TestProduct" + e))
                 .collect(Collectors.toList());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProduct")
-    public ProductDto getProducts(@RequestParam long productId) {
-        return new ProductDto(productId, "TestProduct" + productId);
+    public ProductDtoStub getProducts(@RequestParam long productId) {
+        return new ProductDtoStub(productId, "TestProduct" + productId);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createProduct", consumes = APPLICATION_JSON_VALUE)
-    public ProductDto createProduct(@RequestBody ProductDto productDto) {
-        return productDto;
+    public ProductDtoStub createProduct(@RequestBody ProductDtoStub productDtoStub) {
+        return productDtoStub;
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateProduct", consumes = APPLICATION_JSON_VALUE)
-    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
-        return productDto;
+    public ProductDtoStub updateProduct(@RequestBody ProductDtoStub productDtoStub) {
+        return productDtoStub;
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")

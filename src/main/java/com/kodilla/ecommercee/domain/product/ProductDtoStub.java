@@ -2,15 +2,11 @@ package com.kodilla.ecommercee.domain.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
+public class ProductDtoStub {
+    // This is just a placeholder class, in absence of solidified Product entity, and its DTO.
     private Long id;
     private String name;
-    private String description;
-    private double price;
-    private String groupName;
 }
