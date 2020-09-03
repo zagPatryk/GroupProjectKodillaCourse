@@ -1,58 +1,65 @@
 package com.kodilla.ecommercee.mapper;
 
+import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.cart.dao.CartDao;
+import com.kodilla.ecommercee.domain.group.Group;
 import com.kodilla.ecommercee.domain.group.dao.GroupDao;
-import com.kodilla.ecommercee.domain.order.Order;
-import com.kodilla.ecommercee.domain.order.dao.OrderDao;
 import com.kodilla.ecommercee.domain.product.Product;
 import com.kodilla.ecommercee.domain.product.ProductDto;
-import com.kodilla.ecommercee.domain.product.ProductDtoStub;
 import com.kodilla.ecommercee.domain.product.dao.ProductDao;
-import com.kodilla.ecommercee.domain.user.User;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
 public class ProductMapper {
-    private final GroupDao groupDao;
-    private final ProductDao productDao;
-    private final CartDao cartDao;
-    private final OrderDao orderDao;
+    @Autowired
+    private CartDao cartDao;
+    @Autowired
+    private GroupDao groupDao;
+    @Autowired
+    private ProductDao productDao;
 
-    public ProductDto mapToProductDto(Product product) {
-        return new ProductDto(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getPrice(),
-                product.getGroupId().getName()
+    public Product mapToProduct(ProductDto productDto) {
+        List<Cart> carts = new ArrayList<>();
+        if (productDto.getId() != null) {
+            Optional<Product> optionalProduct = productDao.findById(productDto.getId());
+            optionalProduct.ifPresent(product -> carts.addAll(product.getCarts()));
+        }
+        if (productDto.getGroupId() == null) {
+            productDto.setGroupId(1L);
+        }
+        return new Product(
+                productDto.getId(),
+                productDto.getName(),
+                productDto.getDescription(),
+                productDto.getPrice(),
+                carts,
+                groupDao.findById(productDto.getGroupId()).orElse(new Group())
         );
     }
 
-    public Product mapToProduct(ProductDto productDto) {
-        return productDao.findById(productDto.getId()).orElseGet(
-                () -> new Product(
-                        productDto.getName(),
-                        productDto.getDescription(),
-                        productDto.getPrice(),
-                        groupDao.findByName(productDto.getGroupName())
-                ));
+    public ProductDto mapToProductDto(Product product) {
+        if (product.getId() == null) {
+            return new ProductDto();
+        } else {
+            return new ProductDto(
+                    product.getId(),
+                    product.getName(),
+                    product.getDescription(),
+                    product.getPrice(),
+                    product.getGroupId().getId()
+            );
+        }
     }
 
-    public List<ProductDto> mapToProductDtoList(List<Product> product) {
-        return product.stream()
+    public List<ProductDto> mapToProductDto(List<Product> productList) {
+        return productList.stream()
                 .map(this::mapToProductDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<Product> mapToProductList(List<ProductDto> productDtoList) {
-        return productDtoList.stream()
-                .map(this::mapToProduct)
                 .collect(Collectors.toList());
     }
 }

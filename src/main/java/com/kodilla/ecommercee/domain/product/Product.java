@@ -53,6 +53,18 @@ public class Product {
     @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")
     private Group groupId;
 
+    @Column(name="isActive")
+    private boolean isActive = true;
+
+    public Product(Long id, String name, String description, double price, List<Cart> carts, Group groupId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.carts = carts;
+        this.groupId = groupId;
+    }
+
     public Product(String name, String description, double price) {
         this.name = name;
         this.description = description;
