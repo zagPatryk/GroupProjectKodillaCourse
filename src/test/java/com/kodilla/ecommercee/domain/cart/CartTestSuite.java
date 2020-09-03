@@ -64,18 +64,18 @@ public class CartTestSuite {
         Assert.assertTrue(cartDao.findById(cart3.getId()).isPresent());
 
         //CleanUp
-//        productDao.deleteById(product1.getId());
-//        productDao.deleteById(product2.getId());
-//        productDao.deleteById(product3.getId());
-//        productDao.deleteById(product4.getId());
-//
-//        cartDao.deleteById(cart1.getId());
-//        cartDao.deleteById(cart2.getId());
-//        cartDao.deleteById(cart3.getId());
-//
-//        userDao.deleteById(user1.getId());
-//        userDao.deleteById(user2.getId());
-//        userDao.deleteById(user3.getId());
+        productDao.deleteById(product1.getId());
+        productDao.deleteById(product2.getId());
+        productDao.deleteById(product3.getId());
+        productDao.deleteById(product4.getId());
+
+        cartDao.deleteById(cart1.getId());
+        cartDao.deleteById(cart2.getId());
+        cartDao.deleteById(cart3.getId());
+
+        userDao.deleteById(user1.getId());
+        userDao.deleteById(user2.getId());
+        userDao.deleteById(user3.getId());
     }
 
     @Test

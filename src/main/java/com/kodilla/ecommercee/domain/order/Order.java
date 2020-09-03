@@ -29,7 +29,7 @@ public class Order {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
             mappedBy = "orders" ,
             fetch = FetchType.EAGER)
-    private List<Product> orderList = new ArrayList<>();
+    private List<Product> productsList = new ArrayList<>();
 
     @NotNull
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE},
@@ -39,7 +39,7 @@ public class Order {
 
     public Order(User user, Cart cart) {
         this.user = user;
-        this.orderList = cart.getProductsList();
+        this.productsList = cart.getProductsList();
         for (Product product : cart.getProductsList()) {
             product.getOrders().add(this);
         }
