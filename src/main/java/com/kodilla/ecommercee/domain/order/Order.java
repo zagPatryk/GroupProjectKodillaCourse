@@ -40,5 +40,8 @@ public class Order {
     public Order(User user, Cart cart) {
         this.user = user;
         this.orderList = cart.getProductsList();
+        for (Product product : cart.getProductsList()) {
+            product.getOrders().add(this);
+        }
     }
 }

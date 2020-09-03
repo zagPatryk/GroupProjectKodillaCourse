@@ -223,20 +223,21 @@ public class ProductDaoTestSuite {
         Order order = new Order(user, cart);
         user.getOrder().add(order);
 
+        // When
         userDao.save(user);
         groupDao.save(group);
         cartDao.save(cart);
-        productDao.save(product);
         orderDao.save(order);
+        productDao.save(product);
 
+        product.setActive(false);
+        productDao.save(product);
+
+        Long userId = user.getId();
         Long groupId = group.getId();
         Long productId = product.getId();
         Long cartId = cart.getId();
         Long orderId = order.getOrderId();
-
-        // When
-        product.setActive(false);
-        productDao.save(product);
 
         // Then
         Assert.assertTrue(cartDao.findById(cartId).isPresent());
@@ -248,10 +249,17 @@ public class ProductDaoTestSuite {
         Assert.assertTrue(productDao.findById(productId).isPresent());
         Assert.assertFalse(productDao.findById(productId).get().isActive());
 
-//        Assert.assertTrue(orderDao.findById(orderId).isPresent());
-//        Assert.assertEquals(1, orderDao.findById(orderId).get().getOrderList().size());
+        Assert.assertTrue(orderDao.findById(orderId).isPresent());
+        Assert.assertEquals(1, orderDao.findById(orderId).get().getOrderList().size());
 
         // Clean-up
+        order.getOrderList().clear();
+        orderDao.save(order);
 
+        productDao.deleteById(productId);
+        orderDao.deleteById(orderId);
+        cartDao.deleteById(cartId);
+        userDao.deleteById(userId);
+        groupDao.deleteById(groupId);
     }
 }
