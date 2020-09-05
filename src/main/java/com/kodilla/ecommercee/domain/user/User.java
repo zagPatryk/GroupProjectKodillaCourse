@@ -33,6 +33,7 @@ public class User {
     private int userKey;
 
     @OneToMany(
+            cascade = CascadeType.ALL,
             targetEntity = Order.class,
             mappedBy = "user"
     )
