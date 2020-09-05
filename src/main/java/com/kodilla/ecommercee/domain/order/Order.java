@@ -29,10 +29,10 @@ public class Order {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
             mappedBy = "orders" ,
             fetch = FetchType.EAGER)
-    private List<Product> orderList = new ArrayList<>();
+    private List<Product> productsList = new ArrayList<>();
 
     @NotNull
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE},
             fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
@@ -59,14 +59,14 @@ public class Order {
     }
 
     public void addProduct(Product product) {
-        this.orderList.add(product);
+        this.productsList.add(product);
         product.getOrders().add(this);
     }
 
     public void resetProducts() {
-        for (Product product: this.orderList) {
+        for (Product product: this.productsList) {
             product.getOrders().remove(this);
         }
-        this.orderList.clear();
+        this.productsList.clear();
     }
 }

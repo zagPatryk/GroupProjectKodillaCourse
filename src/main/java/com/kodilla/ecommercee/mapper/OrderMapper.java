@@ -25,7 +25,7 @@ public class OrderMapper {
     public OrderDto mapToOrderDto(Order order) {
         return new OrderDto(
                 order.getOrderId(),
-                productMapper.mapToProductDto(order.getOrderList()),
+                productMapper.mapToProductDto(order.getProductsList()),
                 Optional.ofNullable(order.getUser()).orElse(new User()).getId()
         );
     }

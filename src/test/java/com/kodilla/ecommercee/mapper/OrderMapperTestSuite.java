@@ -59,10 +59,10 @@ public class OrderMapperTestSuite {
 
         // When
         groupDao.save(group);
+        userDao.save(user);
         orderDao.save(order);
         cartDao.save(cart);
         productDao.saveAll(products);
-        userDao.save(user);
         Order orderReadBack = orderDao.findById(order.getOrderId()).orElse(null);
 
         OrderDto orderDto = orderMapper.mapToOrderDto(orderReadBack);
