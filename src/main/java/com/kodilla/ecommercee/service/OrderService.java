@@ -8,7 +8,6 @@ import com.kodilla.ecommercee.domain.order.OrderDto;
 import com.kodilla.ecommercee.domain.order.dao.OrderDao;
 import com.kodilla.ecommercee.domain.product.Product;
 import com.kodilla.ecommercee.domain.product.dao.ProductDao;
-import com.kodilla.ecommercee.domain.user.User;
 import com.kodilla.ecommercee.domain.user.dao.UserDao;
 import com.kodilla.ecommercee.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
@@ -55,22 +54,12 @@ public class OrderService {
         if (orderDbRecord.isPresent()) {
             Order orderForUpdate = orderDbRecord.get();
 
-            Long newUserId = orderDto.getUserId();
-            User user;
-            if (newUserId != null) {
-                Optional<User> newUser = userDao.findById(newUserId);
-                user = newUser.orElseGet(() -> orderDbRecord.get().getUser());
-            } else {
-                user = orderDbRecord.get().getUser();
-            }
-
             List<Product> products = orderDto.getProducts().stream().
                     map(e -> productDao.findById(e.getId()))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toList());
 
-            orderForUpdate.setUser(user);
             orderForUpdate.resetProducts();
             orderForUpdate.addProducts(products);
 
