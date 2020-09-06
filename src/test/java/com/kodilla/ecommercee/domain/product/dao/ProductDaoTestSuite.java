@@ -212,24 +212,23 @@ public class ProductDaoTestSuite {
     @Test
     public void testSafeDeleteProduct() {
         // Given
-        User user = new User();
-        Cart cart = new Cart(user);
         Product product = new Product("test", "testProduct", 100.0);
         Group group = new Group("kurtka");
-
         product.addGroup(group);
+        groupDao.save(group);
+        productDao.save(product);
+
+        User user = new User();
+        Cart cart = new Cart(user);
+        user.setCart(cart);
         cart.addProduct(product);
+        userDao.save(user);
 
         Order order = new Order(user, cart);
         user.getOrder().add(order);
+        orderDao.save(order);
 
         // When
-        userDao.save(user);
-        groupDao.save(group);
-        cartDao.save(cart);
-        orderDao.save(order);
-        productDao.save(product);
-
         product.setActive(false);
         productDao.save(product);
 
@@ -250,10 +249,10 @@ public class ProductDaoTestSuite {
         Assert.assertFalse(productDao.findById(productId).get().isActive());
 
         Assert.assertTrue(orderDao.findById(orderId).isPresent());
-        Assert.assertEquals(1, orderDao.findById(orderId).get().getOrderList().size());
+        Assert.assertEquals(1, orderDao.findById(orderId).get().getProductsList().size());
 
         // Clean-up
-        order.getOrderList().clear();
+        order.getProductsList().clear();
         orderDao.save(order);
 
         productDao.deleteById(productId);

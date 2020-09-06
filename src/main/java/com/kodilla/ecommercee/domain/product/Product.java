@@ -62,7 +62,7 @@ public class Product {
             for (Cart cart: carts) {
                 cart.getProductsList().remove(this);
             }
-            carts = new ArrayList<>();
+            this.carts = new ArrayList<>();
         }
     }
 
