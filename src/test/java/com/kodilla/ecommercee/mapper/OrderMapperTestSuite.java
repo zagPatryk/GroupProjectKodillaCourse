@@ -9,7 +9,6 @@ import com.kodilla.ecommercee.domain.order.OrderDto;
 import com.kodilla.ecommercee.domain.order.dao.OrderDao;
 import com.kodilla.ecommercee.domain.product.Product;
 import com.kodilla.ecommercee.domain.product.ProductDto;
-import com.kodilla.ecommercee.domain.product.ProductDtoStub;
 import com.kodilla.ecommercee.domain.product.dao.ProductDao;
 import com.kodilla.ecommercee.domain.user.User;
 import com.kodilla.ecommercee.domain.user.dao.UserDao;
