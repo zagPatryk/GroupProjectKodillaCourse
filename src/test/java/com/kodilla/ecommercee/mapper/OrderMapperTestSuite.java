@@ -44,25 +44,27 @@ public class OrderMapperTestSuite {
         // Given
         Group group = new Group("group");
         Product p1 = new Product("p1_test", "p1_desc", 10.0, group);
-        Product p2 = new Product("p1_test", "p1_desc", 10.0, group);
-        Product p3 = new Product("p1_test", "p1_desc", 10.0, group);
-        Product p4 = new Product("p1_test", "p1_desc", 10.0, group);
+        Product p2 = new Product("p2_test", "p2_desc", 10.0, group);
+        Product p3 = new Product("p3_test", "p3_desc", 10.0, group);
+        Product p4 = new Product("p4_test", "p4_desc", 10.0, group);
         List<Product> products = Arrays.asList(p1, p2, p3, p4);
 
-        User user = new User("Test_user", 1, 123);
+        groupDao.save(group);
+        productDao.saveAll(products);
 
+        User user = new User("Test_user", 1, 123);
         Cart cart = new Cart(user, products);
         user.setCart(cart);
 
+        userDao.save(user);
+
         Order order = new Order(user, cart);
 
-        // When
-        groupDao.save(group);
-        userDao.save(user);
         orderDao.save(order);
-        cartDao.save(cart);
         productDao.saveAll(products);
-        Order orderReadBack = orderDao.findById(order.getOrderId()).orElse(null);
+
+        // When
+        Order orderReadBack = orderDao.findById(order.getOrderId()).orElse(new Order());
 
         OrderDto orderDto = orderMapper.mapToOrderDto(orderReadBack);
 

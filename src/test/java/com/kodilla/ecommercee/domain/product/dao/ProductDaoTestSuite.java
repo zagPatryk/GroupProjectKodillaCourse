@@ -4,6 +4,8 @@ import com.kodilla.ecommercee.domain.cart.Cart;
 import com.kodilla.ecommercee.domain.cart.dao.CartDao;
 import com.kodilla.ecommercee.domain.group.Group;
 import com.kodilla.ecommercee.domain.group.dao.GroupDao;
+import com.kodilla.ecommercee.domain.order.Order;
+import com.kodilla.ecommercee.domain.order.dao.OrderDao;
 import com.kodilla.ecommercee.domain.product.Product;
 import com.kodilla.ecommercee.domain.user.User;
 import com.kodilla.ecommercee.domain.user.dao.UserDao;
@@ -30,6 +32,9 @@ public class ProductDaoTestSuite {
     private GroupDao groupDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private OrderDao orderDao;
+
 
     @Test
     public void testCreateAndReadProduct() {
@@ -203,4 +208,58 @@ public class ProductDaoTestSuite {
         cartDao.deleteById(cart.getId());
         userDao.deleteById(user.getId());
     }
+
+    @Test
+    public void testSafeDeleteProduct() {
+        // Given
+        Product product = new Product("test", "testProduct", 100.0);
+        Group group = new Group("kurtka");
+        product.addGroup(group);
+        groupDao.save(group);
+        productDao.save(product);
+
+        User user = new User();
+        Cart cart = new Cart(user);
+        user.setCart(cart);
+        cart.addProduct(product);
+        userDao.save(user);
+
+        Order order = new Order(user, cart);
+        user.getOrder().add(order);
+        orderDao.save(order);
+
+        // When
+        product.setActive(false);
+        productDao.save(product);
+
+        Long userId = user.getId();
+        Long groupId = group.getId();
+        Long productId = product.getId();
+        Long cartId = cart.getId();
+        Long orderId = order.getOrderId();
+
+        // Then
+        Assert.assertTrue(cartDao.findById(cartId).isPresent());
+        Assert.assertEquals(0, cartDao.findById(cartId).get().getProductsList().size());
+
+        Assert.assertTrue(groupDao.findById(groupId).isPresent());
+        Assert.assertEquals(1, groupDao.findById(groupId).get().getProducts().size());
+
+        Assert.assertTrue(productDao.findById(productId).isPresent());
+        Assert.assertFalse(productDao.findById(productId).get().isActive());
+
+        Assert.assertTrue(orderDao.findById(orderId).isPresent());
+        Assert.assertEquals(1, orderDao.findById(orderId).get().getProductsList().size());
+
+        // Clean-up
+        order.getProductsList().clear();
+        orderDao.save(order);
+
+        productDao.deleteById(productId);
+        orderDao.deleteById(orderId);
+        cartDao.deleteById(cartId);
+        userDao.deleteById(userId);
+        groupDao.deleteById(groupId);
+    }
 }
+
