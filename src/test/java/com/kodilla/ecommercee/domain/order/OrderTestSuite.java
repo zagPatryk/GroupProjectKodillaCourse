@@ -139,12 +139,13 @@ public class OrderTestSuite {
         Product product = new Product("test", "test product", 10);
         Cart cart = new Cart(user, product);
         Order order = new Order(user, cart);
+        user.setCart(cart);
 
         userDao.save(user);
         cartDao.save(cart);
-       // user.setCart(cart);
-        orderDao.save(order);
         productDao.save(product);
+        orderDao.save(order);
+        // user.setCart(cart);
      //   userDao.save(user);
 
         long userId = user.getId();
