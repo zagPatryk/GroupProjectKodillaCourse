@@ -37,11 +37,36 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
+    public Order(Cart cart) {
+        addUser(cart.getUser());
+        addProducts(cart.getProductsList());
+    }
+
     public Order(User user, Cart cart) {
+        addUser(user);
+        addProducts(cart.getProductsList());
+    }
+
+    public void addUser(User user) {
         this.user = user;
-        this.productsList = cart.getProductsList();
-        for (Product product : cart.getProductsList()) {
-            product.getOrders().add(this);
+        user.getOrder().add(this);
+    }
+
+    public void addProducts(List<Product> products) {
+        for (Product product: products) {
+            this.addProduct(product);
         }
+    }
+
+    public void addProduct(Product product) {
+        this.productsList.add(product);
+        product.getOrders().add(this);
+    }
+
+    public void resetProducts() {
+        for (Product product: this.productsList) {
+            product.getOrders().remove(this);
+        }
+        this.productsList.clear();
     }
 }
