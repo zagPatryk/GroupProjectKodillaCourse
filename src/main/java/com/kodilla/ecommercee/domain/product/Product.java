@@ -56,6 +56,16 @@ public class Product {
     @Column(name="isActive")
     private boolean isActive = true;
 
+    public void setActive(boolean status) {
+        this.isActive = status;
+        if (!status) {
+            for (Cart cart: carts) {
+                cart.getProductsList().remove(this);
+            }
+            this.carts = new ArrayList<>();
+        }
+    }
+
     public Product(Long id, String name, String description, double price, List<Cart> carts, Group groupId) {
         this.id = id;
         this.name = name;

@@ -135,23 +135,24 @@ public class OrderTestSuite {
     @Test
     public void testDeleteOrderWithoutDeleteComponents() {
         //Given
-        User user = new User("nick", 1,1);
         Product product = new Product("test", "test product", 10);
+        productDao.save(product);
+
+        User user = new User("nick", 1,1);
         Cart cart = new Cart(user, product);
-        Order order = new Order(user, cart);
         user.setCart(cart);
 
         userDao.save(user);
         cartDao.save(cart);
-        productDao.save(product);
+
+        Order order = new Order(user, cart);
         orderDao.save(order);
-        // user.setCart(cart);
-     //   userDao.save(user);
 
         long userId = user.getId();
         long orderId = order.getOrderId();
         long cartId = cart.getId();
         long productId = product.getId();
+
         //When
         Optional<Order> checkOrder = orderDao.findById(orderId);
         Optional<Product> checkProduct = productDao.findById(productId);
