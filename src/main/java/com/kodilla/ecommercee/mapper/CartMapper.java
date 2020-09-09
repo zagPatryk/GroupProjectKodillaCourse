@@ -6,16 +6,23 @@ import com.kodilla.ecommercee.domain.cart.dao.CartDao;
 import com.kodilla.ecommercee.domain.product.dao.ProductDao;
 import com.kodilla.ecommercee.domain.user.User;
 import com.kodilla.ecommercee.domain.user.dao.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class CartMapper {
+    @Autowired
     private UserDao userDao;
+    @Autowired
     private ProductDao productDao;
+    @Autowired
     private ProductMapper productMapper;
+    @Autowired
     private CartDao cartDao;
 
     public Cart mapToCart(CartDto cartDto) {

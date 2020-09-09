@@ -13,21 +13,27 @@ import com.kodilla.ecommercee.domain.user.UserDto;
 import com.kodilla.ecommercee.domain.user.dao.UserDao;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.mapper.OrderMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
+@Service
 public class CartService {
-
+    @Autowired
     private CartDao cartDao;
+    @Autowired
     private CartMapper cartMapper;
+    @Autowired
     private OrderDao orderDao;
+    @Autowired
     private OrderMapper orderMapper;
+    @Autowired
     private ProductDao productDao;
-    private UserDao userDao;
-    private UserDto userDto;
-
 
     public Cart getNewCart(User user) {
         Cart cart = new Cart(user);
