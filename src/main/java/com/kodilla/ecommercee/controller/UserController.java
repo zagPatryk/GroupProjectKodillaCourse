@@ -24,11 +24,9 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
-    public User blockUser(@RequestParam long userId, @RequestParam int newUserStatus) {
-        User user = userService.getUser(userId);
-        user.setStatus(newUserStatus);
-        userService.saveUser(user);
-        return user;
+    public void blockUser(@RequestParam long userId, @RequestParam int newUserStatus) {
+        userService.getUser(userId).setStatus(newUserStatus);
+        userService.saveUser(userService.getUser(userId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUser")
@@ -37,23 +35,13 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUserKey")
-    public Long getUserKey(@RequestParam Long userId) {
-        User user = userService.getUser(userId);
-        Long generatedUserKey = userService.createUserKey();
-        user.setUserKey(generatedUserKey);
-        userService.saveUser(user);
-        return generatedUserKey;
+    public long getUserKey(@RequestParam Long userId) {
+        return userService.createUserKey(userId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "checkIfUserKeyIsValid")
     public boolean checkIfUserKeyIsValid(@RequestParam Long userId) {
-        Long currentTimeSecs = System.currentTimeMillis()/1000;
-        User user = userService.getUser(userId);
-            if(currentTimeSecs - user.getUserKey() < 30){   //UserKey is active for 30 seconds for Postman tests purpose - for one hour change 30 -> 3600
-                return true;
-            } else {
-                return false;
-            }
+       return userService.checkIfUserKeyIsValid(userId);
     }
 }
 
