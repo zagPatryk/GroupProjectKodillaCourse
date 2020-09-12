@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.user.User;
 import com.kodilla.ecommercee.domain.user.UserDto;
 import com.kodilla.ecommercee.mapper.UserMapper;
 import com.kodilla.ecommercee.service.UserService;
@@ -24,36 +23,22 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
-    public void blockUser(@RequestParam long userId, @RequestParam int newUserStatus) {
-        userService.getUser(userId).setStatus(newUserStatus);
-        userService.saveUser(userService.getUser(userId));
+    public UserDto blockUser(@RequestParam long userId) {
+        return userMapper.mapToUserDto(userService.blockUser(userId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUser")
-    public User getUser(@RequestParam long userId) {
-        return userService.getUser(userId);
+    public UserDto getUser(@RequestParam long userId) {
+        return userMapper.mapToUserDto(userService.getUser(userId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUserKey")
-    public long getUserKey(@RequestParam Long userId) {
-        return userService.createUserKey(userId);
+    public UserDto getUserKey(@RequestParam Long userId) {
+        return userMapper.mapToUserDto(userService.createUserKey(userId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "checkIfUserKeyIsValid")
     public boolean checkIfUserKeyIsValid(@RequestParam Long userId) {
-       return userService.checkIfUserKeyIsValid(userId);
+        return userService.checkIfUserKeyIsValid(userId);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
