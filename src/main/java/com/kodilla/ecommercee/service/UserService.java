@@ -35,15 +35,16 @@ public class UserService {
         }
     }
 
-    public User createUserKey(long userId) {
+    public long createUserKey(long userId) {
         if (userDao.findById(userId).isPresent()) {
             User user = getUser(userId);
             long generatedUserKey = System.currentTimeMillis() / 1000;
             user.setUserKey(generatedUserKey);
             saveUser(user);
-            return user;
+            return generatedUserKey;
+        } else {
+            return 0L;
         }
-        return new User();
     }
 
     public boolean checkIfUserKeyIsValid(long userId) {

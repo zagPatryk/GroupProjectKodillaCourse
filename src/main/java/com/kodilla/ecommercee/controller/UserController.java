@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUserKey")
-    public UserDto getUserKey(@RequestParam Long userId) {
-        return userMapper.mapToUserDto(userService.createUserKey(userId));
+    public long getUserKey(@RequestParam Long userId) {
+        return userService.createUserKey(userId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "checkIfUserKeyIsValid")
