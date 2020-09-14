@@ -30,7 +30,7 @@ public class User {
     private int status;
 
     @Column(name = "USER_KEY")
-    private int userKey;
+    private long userKey;
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -43,7 +43,7 @@ public class User {
     @JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")
     private Cart cart;
 
-    public User(String username, int status, int userKey) {
+    public User(String username, int status, long userKey) {
         this.username = username;
         this.status = status;
         this.userKey = userKey;

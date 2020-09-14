@@ -1,29 +1,44 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.domain.user.UserDto;
+import com.kodilla.ecommercee.mapper.UserMapper;
+import com.kodilla.ecommercee.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
 
-    @RequestMapping(method = RequestMethod.POST, value = "createUser")
-    public UserDto createUser(@RequestBody UserDto userDto){
-        return userDto;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
+
+    @RequestMapping(method = RequestMethod.POST, value = "createUser", consumes = APPLICATION_JSON_VALUE)
+    public void createUser(@RequestBody UserDto userDto) {
+        userService.saveUser(userMapper.mapToUser(userDto));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
-    public void blockUser(@RequestParam long userId){
-        System.out.println("User " + userId + " is blocked.");
+    public UserDto blockUser(@RequestParam long userId) {
+        return userMapper.mapToUserDto(userService.blockUser(userId));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getUser")
+    public UserDto getUser(@RequestParam long userId) {
+        return userMapper.mapToUserDto(userService.getUser(userId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUserKey")
-    public Long getUserKey(@RequestParam long userId){
-        UserDto userDto = new UserDto(1L,"user1", 1, 9999);
-        long userkey = userDto.getUserKey();
-        System.out.println("UserKey for user " + userId + ": " + userkey);
-        return userkey;
+    public long getUserKey(@RequestParam Long userId) {
+        return userService.createUserKey(userId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "checkIfUserKeyIsValid")
+    public boolean checkIfUserKeyIsValid(@RequestParam Long userId) {
+        return userService.checkIfUserKeyIsValid(userId);
     }
 }
-
-
