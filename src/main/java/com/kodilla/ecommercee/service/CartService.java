@@ -54,7 +54,7 @@ public class CartService {
                 () -> new IllegalArgumentException("Cart not found")
             );
             Product productToRemove =productService.getProduct(productId);
-            getAllProductsFromCart(cartId).remove(productToRemove);
+            cart.getProductsList().remove(productToRemove);
             cartMapper.mapToCartDto(cartDao.save(cart));
     }
 
