@@ -1,41 +1,45 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.cart.CartDtoStub;
+import com.kodilla.ecommercee.domain.cart.CartDto;
+import com.kodilla.ecommercee.domain.order.OrderDto;
+import com.kodilla.ecommercee.domain.product.ProductDto;
+import com.kodilla.ecommercee.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/v1/cart")
 public class CartController {
+
+    @Autowired
+    private CartService cartService;
+
     @RequestMapping(method = RequestMethod.GET, value = "getNewCart")
-    public CartDtoStub getNewCart(@RequestParam String user) {
-        return new CartDtoStub(new ArrayList<>());
+    public CartDto getNewCart(@RequestParam Long userId) {
+        return cartService.getNewCart(userId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProductsFromCart")
-    public List<String> getProductsFromCart(@RequestParam String user) {
-        return getNewCart("user").getCart();
+    public List<ProductDto> getAllProductsFromCart(@RequestParam Long cartId) {
+        return cartService.getAllProductsFromCart(cartId);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addProductToCart", consumes = APPLICATION_JSON_VALUE)
-    public CartDtoStub addProductToCart(@RequestBody String product) {
-        CartDtoStub cartDtoStub = new CartDtoStub(getProductsFromCart("user"));
-        cartDtoStub.getCart().add(product);
-        return cartDtoStub;
+    public CartDto addProductToCart(@RequestParam Long cartId, @RequestParam Long productId) {
+        return cartService.addProductToCart(cartId,productId);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProductFromCart")
-    public String deleteProductFromCart(@RequestParam String product) {
-        return "item deleted";
+    public void deleteProductFromCart(@RequestParam Long cartId, @RequestParam Long productId) {
+        cartService.deleteSelectedProductFromCart(cartId,productId);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addNewOrder", consumes = APPLICATION_JSON_VALUE)
-    public String addNewOrder(@RequestBody CartDtoStub cartDtoStub) {
-        return "New Order created";
+    public OrderDto addNewOrder(@RequestBody CartDto cartDto) {
+        return cartService.createOrder(cartDto);
     }
 }
