@@ -37,7 +37,9 @@ public class CartService {
     }
 
     public List<ProductDto> getAllProductsFromCart(Long cartId) {
-        Cart cart = cartDao.findById(cartId).orElse(new Cart());
+        Cart cart = cartDao.findById(cartId).orElseThrow(
+                () -> new IllegalArgumentException("Cart not found")
+        );
         return productMapper.mapToProductDto(cart.getProductsList());
     }
 
@@ -48,15 +50,12 @@ public class CartService {
     }
 
     public boolean deleteSelectedProductFromCart(Long cartId, Long productId) {
-        if (cartDao.existsById(cartId)) {
-            Cart cart = cartDao.findById(cartId).orElse(new Cart());
+            Cart cart = cartDao.findById(cartId).orElseThrow(
+                () -> new IllegalArgumentException("Cart not found")
+            );
             Product productToRemove =productService.getProduct(productId);
             getAllProductsFromCart(cartId).remove(productToRemove);
             cartMapper.mapToCartDto(cartDao.save(cart));
-            return true;
-        } else {
-            throw new IllegalArgumentException("Cart not exist");
-        }
     }
 
     public OrderDto createOrder(CartDto cartDto) {
