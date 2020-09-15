@@ -49,7 +49,7 @@ public class CartService {
         return cartMapper.mapToCartDto(cartDao.save(cart));
     }
 
-    public boolean deleteSelectedProductFromCart(Long cartId, Long productId) {
+    public void deleteSelectedProductFromCart(Long cartId, Long productId) {
             Cart cart = cartDao.findById(cartId).orElseThrow(
                 () -> new IllegalArgumentException("Cart not found")
             );

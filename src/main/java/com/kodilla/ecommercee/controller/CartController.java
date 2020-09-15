@@ -34,8 +34,8 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProductFromCart")
-    public boolean deleteProductFromCart(@RequestParam Long cartId, @RequestParam Long productId) {
-        return cartService.deleteSelectedProductFromCart(cartId,productId);
+    public void deleteProductFromCart(@RequestParam Long cartId, @RequestParam Long productId) {
+        cartService.deleteSelectedProductFromCart(cartId,productId);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addNewOrder", consumes = APPLICATION_JSON_VALUE)
