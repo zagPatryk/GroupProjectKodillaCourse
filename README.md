@@ -1,3 +1,46 @@
+# 0. Start
+
+Group project. My part **Patryk**
+
+| Lp |      Id      |                                                         Nazwa                                                        |    Dodał   |   Wykonał  |
+|:--:|:------------:|:--------------------------------------------------------------------------------------------------------------------:|:----------:|:----------:|
+|  1 | JDP200801-2  | GroupController - wstępna implementacja endpointów                                                                   |   kodilla  |   Andrzej  |
+|  2 | JDP200801-4  | OrderController - wstępna implementacja endpointów                                                                   |   kodilla  |   Andrzej  |
+|  3 | JDP200801-18 | Encja Group - testy                                                                                                  |   kodilla  |   Andrzej  |
+|  4 | JDP200801-3  | CartController - wstępna implementacja endpointów                                                                    |   kodilla  |   Joanna   |
+|  5 | JDP200801-6  | ProductController - testy endpointów                                                                                 |   kodilla  |   Joanna   |
+|  6 | JDP200801-11 | Encja Order - implementacja                                                                                          |   kodilla  |   Joanna   |
+|  7 | JDP200801-16 | Encja Order - testy                                                                                                  |   kodilla  |   Joanna   |
+|  8 | JDP200801-22 | GroupController - rzeczywista implementacja metod                                                                    |   kodilla  |   Joanna   |
+|  9 | JDP200801-32 | Upgrade Encji Order                                                                                                  |   Joanna   |   Joanna   |
+| 10 | JDP200801-1  | ProductController - wstępna implementacja endpointów                                                                 |   kodilla  |   Maciej   |
+| 11 | JDP200801-8  | CartController - testy endpointów                                                                                    |   kodilla  |   Maciej   |
+| 12 | JDP200801-13 | Encja Group - implementacja                                                                                          |   kodilla  |   Maciej   |
+| 13 | JDP200801-17 | Encja Product - testy                                                                                                |   kodilla  |   Maciej   |
+| 14 | JDP200801-24 | OrderController - rzeczywista implementacja metod                                                                    |   kodilla  |   Maciej   |
+| 15 | JDP200801-28 | Encja Product - usunięcie istniejącej encji Product nie uaktualnia list encji Group oraz Cart                        |   Maciej   |   Maciej   |
+| 16 | JDP200801-29 | Błąd "tzw dwuznacznej nazwy Encji" w klasie Group, którą Hibernaer nie czyta lub tworzy konflikt w utworzeniu sql'a. |   Maciej   |   Maciej   |
+| 17 | JDP200801-38 | Dodanie pliku Readme.md                                                                                              |   Maciej   |   Maciej   |
+| 18 | JDP200801-9  | OrderController - testy endpointów                                                                                   |   kodilla  |   Marcin   |
+| 19 | JDP200801-12 | Encja Product - implementacja                                                                                        |   kodilla  |   Marcin   |
+| 20 | JDP200801-15 | Encja User - implementacja                                                                                           |   kodilla  |   Marcin   |
+| 21 | JDP200801-20 | Encja User - testy                                                                                                   |   kodilla  |   Marcin   |
+| 22 | JDP200801-23 | CartController - rzeczywista implementacja metod                                                                     |   kodilla  |   Marcin   |
+| 23 | JDP200801-10 | UserController - testy endpointów                                                                                    |   kodilla  | **Patryk** |
+| 24 | JDP200801-14 | Encja Cart - implementacja                                                                                           |   kodilla  | **Patryk** |
+| 25 | JDP200801-19 | Encja Cart - testy                                                                                                   |   kodilla  | **Patryk** |
+| 26 | JDP200801-21 | ProductController - rzeczywista implementacja metod                                                                  |   kodilla  | **Patryk** |
+| 27 | JDP200801-30 | Encja cart - brakujące cascade, fetch oraz poprawa konstruktorów                                                     | **Patryk** | **Patryk** |
+| 28 | JDP200801-31 | ProductDaoTestSuite - nie wszystkie wpisy do bazy danych są usuwane po zakończeniu testów                            | **Patryk** | **Patryk** |
+| 29 | JDP200801-33 | Encja User - niepoprawne mappedBy                                                                                    | **Patryk** | **Patryk** |
+| 30 | JDP200801-34 | Zmiana Cart - usunięcie @NotNull w połączeniu z User                                                                 | **Patryk** | **Patryk** |
+| 31 | JDP200801-35 | Zmiana Product - dodanie isActive                                                                                    | **Patryk** | **Patryk** |
+| 32 | JDP200801-37 | Dodanie swaggera                                                                                                     | **Patryk** | **Patryk** |
+| 33 | JDP200801-36 | Encja Order - dodanie order status                                                                                   | **Patryk** |      -     |
+| 34 | JDP200801-5  | UserController - wstępna implementacja endpointów                                                                    |   kodilla  | Paweł      |
+| 35 | JDP200801-7  | GroupController - testy endpointów                                                                                   |   kodilla  | Paweł      |
+| 36 | JDP200801-25 | UserController - rzeczywista implementacja metod                                                                     |   kodilla  | Paweł      |
+
 # 1. Description
 
 This project is an implementation of a simple BackEnd logic for an ecommerce store. 
