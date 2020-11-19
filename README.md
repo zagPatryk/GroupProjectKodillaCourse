@@ -1,6 +1,19 @@
 # 0. Start
 
-Group project. My part **Patryk**
+Simple team project to learn Kanban board. Review other people's codes using a collaborative project on github.
+
+This project is an implementation of a simple BackEnd logic for an ecommerce store. It is implemented in a REST architecture, and it is made of 5 entities (product, group, user, cart, order) coupled together with SQL-style relationships and business logic.
+
+Main: Java, Spring, SpringBoot, Hibernate
+Additional: SQL
+For testing: JUnit4
+App builder: Gradle
+Version control: Git
+DataBases: MySQL, additionally H2 in group project
+Additionally used: lombok, swagger
+Knowledge about: Kanban board, team work, project lifetime cycle
+
+My part **Patryk**
 
 | Lp |      Id      |                                                         Nazwa                                                        |   AddedBy  |   DoneBy   |
 |:--:|:------------:|:--------------------------------------------------------------------------------------------------------------------:|:----------:|:----------:|
